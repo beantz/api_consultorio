@@ -2,26 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pacientes;
 use Illuminate\Http\Request;
-use App\Traits\ApiResponse;
-use PhpParser\Node\Stmt\TryCatch;
 
-class PacientesController extends Controller
+class AgendamentoController extends Controller
 {
-    use ApiResponse;
-    
     public function index()
     {
-        $pacientes = Pacientes::all();
-
-        try {
-            return $this->success($pacientes, 'Todos os pacientes registrados', 200);
-            
-        } catch (\Exception $e) {
-            \Log::error($e->getMessage());
-            return $this->error('Falha ao listar pacientes', 500);
-        }
+        //
     }
 
     /**

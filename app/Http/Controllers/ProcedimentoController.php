@@ -2,23 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Procedimento;
 use Illuminate\Http\Request;
 
 class ProcedimentoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
     {
         //
     }
@@ -34,15 +22,7 @@ class ProcedimentoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Procedimento $procedimento)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Procedimento $procedimento)
+    public function show(string $id)
     {
         //
     }
@@ -50,7 +30,7 @@ class ProcedimentoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Procedimento $procedimento)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -58,7 +38,7 @@ class ProcedimentoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Procedimento $procedimento)
+    public function destroy(string $id)
     {
         //
     }
