@@ -29,7 +29,15 @@ class PacientesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $paciente = Pacientes::create($request->all());
+
+        try {
+            return $this->success($paciente, 'Paciente cadastrado com sucesso', 200);
+            
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+            return $this->error('Falha ao cadastrar paciente', 500);
+        }
     }
 
     /**
@@ -37,7 +45,15 @@ class PacientesController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $paciente = Pacientes::find($id, 'id')->get();
+
+        try {
+            return $this->success($paciente, 'Paciente encontrado com sucesso', 200);
+            
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+            return $this->error("Falha ao procurar paciente de id: $id", 500);
+        }
     }
 
     /**
@@ -45,7 +61,16 @@ class PacientesController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        Pacientes::find($id, 'id')->update($request->all());
+        $paciente = Pacientes::find($id, 'id')->get();
+
+        try {
+            return $this->success($paciente, 'Paciente atualizado com sucesso', 200);
+            
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+            return $this->error("Falha ao atualizar dados de paciente de id: $id", 500);
+        }
     }
 
     /**
@@ -53,6 +78,14 @@ class PacientesController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $paciente = Pacientes::find($id, 'id')->delete();
+    
+        try {
+            return $this->success(null, 'Paciente deletado com sucesso', 200);
+            
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+            return $this->error("Falha ao deletar dados de paciente de id: $id", 500);
+        }
     }
 }
