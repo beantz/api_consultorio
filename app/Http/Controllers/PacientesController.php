@@ -16,11 +16,11 @@ class PacientesController extends Controller
     use ApiResponse;
     
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Traits\ApiResponse
      * @response 200 {
-     * "status": "success",
+     * "data": [{"id": 1, "nome": "João Silva"}, ...]
      * "message": "Todos os pacientes registrados",
-     * "data": [{"id": 1, "nome": "João Silva"}, ...],
+     * "code": "200",
      * }
      * 
      */
@@ -38,6 +38,11 @@ class PacientesController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * @return \Traits\ApiResponse
+     * @response 200 {
+     * "data": [{"id": 1, "nome": "João Silva"}, ...]
+     * "message": "Paciente cadastrado",
+     * "code": "201",
      */
     public function store(ValidationPacientes $request)
     {
@@ -55,6 +60,11 @@ class PacientesController extends Controller
 
     /**
      * Display the specified resource.
+     * @return \Traits\ApiResponse
+     * @response 200 {
+     * "data": [{"id": 1, "nome": "João Silva"}, ...]
+     * "message": "Paciente encontrado",
+     * "code": "200",
      */
     public function show(string $id)
     {
@@ -65,13 +75,18 @@ class PacientesController extends Controller
 
         //recuperar exception e $e recebe uma instancia da exception
         } catch (ModelNotFoundException $e) {
-            return $this->error('Paciente não encontrado', 404); 
+            return $this->error('Paciente não encontrado', 404, $e->getMessage()); 
         }
 
     }
 
     /**
      * Update the specified resource in storage.
+     * @return \Traits\ApiResponse
+     * @response 200 {
+     * "data": [{"id": 1, "nome": "João Silva"}, ...]
+     * "message": "Paciente atualizado com sucesso",
+     * "code": "200",
      */
     public function update(Request $request, string $id)
     {
@@ -88,6 +103,11 @@ class PacientesController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     *  @return \Traits\ApiResponse
+     * @response 200 {
+     * "data": null
+     * "message": "Paciente deletado com sucesso",
+     * "code": "200",
      */
     public function destroy(string $id)
     {

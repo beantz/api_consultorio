@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PacientesController;
+use App\Http\Controllers\ProcedimentoController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'login'])->name('usuario.login');
@@ -17,3 +18,6 @@ Route::middleware('auth:api')->prefix('Pacientes')->group( function() {
 
 Route::get('Pacientes', [PacientesController::class, 'index'])->name('pacientes.index');
 Route::get('Pacientes/Visualizar/{id}', [PacientesController::class, 'show'])->name('pacientes.show');
+
+Route::get('Procedimentos', [ProcedimentoController::class, 'index'])->name('procedimento.index');
+Route::get('Procedimentos/Visualizar/{id}', [ProcedimentoController::class, 'show'])->name('procedimento.visualizar');
