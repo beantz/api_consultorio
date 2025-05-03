@@ -4,12 +4,13 @@ namespace App\Traits;
 
 trait ApiResponse
 {
-    protected function success($data, ?string $message = null, int $code = 200)
+    protected function success($data, ?string $message = null, $token = null ,int $code = 200)
     {
         return response()->json([
             'status' => 'success',
             'message' => $message,
-            'data' => $data
+            'data' => $data,
+            'token' => $token
         ], $code);
     }
 

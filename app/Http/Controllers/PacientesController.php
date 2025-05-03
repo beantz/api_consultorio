@@ -5,21 +5,33 @@ namespace App\Http\Controllers;
 use App\Models\Pacientes;
 use Illuminate\Http\Request;
 use App\Traits\ApiResponse;
-use PhpParser\Node\Stmt\TryCatch;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Http\Requests\ValidationPacientes;
 
+/**
+ * controller para fazer gerenciamento do crud de pacientes
+ */
 class PacientesController extends Controller
 {
     use ApiResponse;
     
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     * @response 200 {
+     * "status": "success",
+     * "message": "Todos os pacientes registrados",
+     * "data": [{"id": 1, "nome": "João Silva"}, ...],
+     * }
+     * 
+     */
     public function index()
     {
-        $pacientes = Pacientes::all();
-
         try {
+            $pacientes = Pacientes::all();
             return $this->success($pacientes, 'Todos os pacientes registrados', 200);
             
         } catch (\Exception $e) {
-            \Log::error($e->getMessage());
+            
             return $this->error('Falha ao listar pacientes', 500);
         }
     }
@@ -27,15 +39,16 @@ class PacientesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ValidationPacientes $request)
     {
-        $paciente = Pacientes::create($request->all());
+        $request->validated();
 
         try {
-            return $this->success($paciente, 'Paciente cadastrado com sucesso', 200);
+            $paciente = Pacientes::create($request->all());
+            return $this->success($paciente, 'Paciente cadastrado com sucesso', 201);
             
         } catch (\Exception $e) {
-            \Log::error($e->getMessage());
+            
             return $this->error('Falha ao cadastrar paciente', 500);
         }
     }
@@ -45,15 +58,16 @@ class PacientesController extends Controller
      */
     public function show(string $id)
     {
-        $paciente = Pacientes::find($id, 'id')->get();
-
+        // Lança ModelNotFoundException se não existir
         try {
-            return $this->success($paciente, 'Paciente encontrado com sucesso', 200);
-            
-        } catch (\Exception $e) {
-            \Log::error($e->getMessage());
-            return $this->error("Falha ao procurar paciente de id: $id", 500);
+            $paciente = Pacientes::findOrFail($id);
+            return $this->success($paciente, 'Paciente encontrado', 200);
+
+        //recuperar exception e $e recebe uma instancia da exception
+        } catch (ModelNotFoundException $e) {
+            return $this->error('Paciente não encontrado', 404); 
         }
+
     }
 
     /**
@@ -61,15 +75,14 @@ class PacientesController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        Pacientes::find($id, 'id')->update($request->all());
-        $paciente = Pacientes::find($id, 'id')->get();
-
         try {
+            $paciente = Pacientes::findOrFail($id);
+            $paciente->update($request->all());
             return $this->success($paciente, 'Paciente atualizado com sucesso', 200);
             
-        } catch (\Exception $e) {
-            \Log::error($e->getMessage());
-            return $this->error("Falha ao atualizar dados de paciente de id: $id", 500);
+        } catch (ModelNotFoundException $e) {
+            
+            return $this->error("Não foi possível encontrar paciente de id: $id", 404);
         }
     }
 
@@ -78,14 +91,15 @@ class PacientesController extends Controller
      */
     public function destroy(string $id)
     {
-        $paciente = Pacientes::find($id, 'id')->delete();
     
         try {
+            $paciente = Pacientes::findOrFail($id);
+            $paciente->delete();
             return $this->success(null, 'Paciente deletado com sucesso', 200);
             
-        } catch (\Exception $e) {
-            \Log::error($e->getMessage());
-            return $this->error("Falha ao deletar dados de paciente de id: $id", 500);
+        } catch (ModelNotFoundException $e) {
+            
+            return $this->error("Não foi possível encontrar dados de paciente de id: $id", 404);
         }
     }
 }
