@@ -3,6 +3,10 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use Illuminate\Routing\Middleware\ThrottleRequests;
+use PHPOpenSourceSaver\JWTAuth\Http\Middleware\Authenticate;
+use PHPOpenSourceSaver\JWTAuth\Http\Middleware\RefreshToken;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -12,7 +16,16 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //$app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
+       $middleware->alias([
+        'auth' => Authenticate::class,
+        'jwt.auth' => Authenticate::class,
+        'jwt.refresh' => RefreshToken::class,
+        'throttle' => ThrottleRequests::class,
+       ]);
+
+       $middleware->api(prepend: [
+            ThrottleRequests::class,
+       ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
