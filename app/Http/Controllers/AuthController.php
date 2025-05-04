@@ -6,7 +6,12 @@ use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 use PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ValidationUsersStore;
+use App\Models\Pacientes;
 use App\Models\User;
+use App\Users;
+use GuzzleHttp\Psr7\Request;
+use Mockery\Generator\Parameter;
+use PhpParser\Node\Stmt\Return_;
 
 class AuthController extends Controller
 {
@@ -31,13 +36,16 @@ class AuthController extends Controller
 
     public function register(ValidationUsersStore $request)
     {
-        $request->validated();
 
-        $user = User::create($request->all());
+        $validates = $request->validated();
+
+        $user = User::create($validates);
 
         $token = JWTAuth::fromUser($user);
 
+        // //dar um retorno de success aqui
         return $this->respondWithToken($token);
+
     }
 
     public function logout()

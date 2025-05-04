@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Users;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -14,6 +16,11 @@ class User extends Authenticatable implements JWTSubject
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasApiTokens, HasFactory, Notifiable;
 
+    //definindo a propriedade da classe user onde vai definir user_type com valores de uma das constantes em enum 
+    protected $casts = [
+        'user_type' => Users::class
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -22,7 +29,12 @@ class User extends Authenticatable implements JWTSubject
     protected $fillable = [
         'name',
         'email',
+        'years',
+        'phone',
+        'allergies',
+        'medicines_used',
         'password',
+        'user_type'
     ];
 
     /**

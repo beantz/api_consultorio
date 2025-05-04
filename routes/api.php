@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PacientesController;
 use App\Http\Controllers\ProcedimentoController;
@@ -21,3 +22,5 @@ Route::get('Pacientes/Visualizar/{id}', [PacientesController::class, 'show'])->n
 
 Route::get('Procedimentos', [ProcedimentoController::class, 'index'])->name('procedimento.index');
 Route::get('Procedimentos/Visualizar/{id}', [ProcedimentoController::class, 'show'])->name('procedimento.visualizar');
+
+Route::post('Admin/Register', [AdminController::class, 'registeredByAdmin']);
