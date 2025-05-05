@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Traits\ApiResponse;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Requests\ValidationPacientes;
+use App\Http\Services\PacientesServices;
+use App\Models\User;
 
 /**
  * controller para fazer gerenciamento do crud de pacientes
@@ -15,111 +17,44 @@ class PacientesController extends Controller
 {
     use ApiResponse;
     
-    /**
-     * @return \Traits\ApiResponse
-     * @response 200 {
-     * "data": [{"id": 1, "nome": "João Silva"}, ...]
-     * "message": "Todos os pacientes registrados",
-     * "code": "200",
-     * }
-     * 
-     */
-    public function index()
+    protected $pacientesServices;
+
+    public function __construct(PacientesServices $PacientesServices)
     {
-        try {
-            $pacientes = Pacientes::all();
-            return $this->success($pacientes, 'Todos os pacientes registrados', 200);
-            
-        } catch (\Exception $e) {
-            
-            return $this->error('Falha ao listar pacientes', 500);
-        }
+        $this->pacientesServices = $PacientesServices;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @return \Traits\ApiResponse
-     * @response 200 {
-     * "data": [{"id": 1, "nome": "João Silva"}, ...]
-     * "message": "Paciente cadastrado",
-     * "code": "201",
-     */
+    public function index()
+    {
+        return $this->pacientesServices->getAllPatients();
+
+    }
+
     public function store(ValidationPacientes $request)
     {
         $request->validated();
 
-        try {
-            $paciente = Pacientes::create($request->all());
-            return $this->success($paciente, 'Paciente cadastrado com sucesso', 201);
-            
-        } catch (\Exception $e) {
-            
-            return $this->error('Falha ao cadastrar paciente', 500);
-        }
+        return $this->pacientesServices->registerPatients($request);
     }
 
-    /**
-     * Display the specified resource.
-     * @return \Traits\ApiResponse
-     * @response 200 {
-     * "data": [{"id": 1, "nome": "João Silva"}, ...]
-     * "message": "Paciente encontrado",
-     * "code": "200",
-     */
     public function show(string $id)
     {
-        // Lança ModelNotFoundException se não existir
-        try {
-            $paciente = Pacientes::findOrFail($id);
-            return $this->success($paciente, 'Paciente encontrado', 200);
 
-        //recuperar exception e $e recebe uma instancia da exception
-        } catch (ModelNotFoundException $e) {
-            return $this->error('Paciente não encontrado', 404, $e->getMessage()); 
-        }
+        return $this->pacientesServices->findPatient($id);
 
     }
 
-    /**
-     * Update the specified resource in storage.
-     * @return \Traits\ApiResponse
-     * @response 200 {
-     * "data": [{"id": 1, "nome": "João Silva"}, ...]
-     * "message": "Paciente atualizado com sucesso",
-     * "code": "200",
-     */
     public function update(Request $request, string $id)
     {
-        try {
-            $paciente = Pacientes::findOrFail($id);
-            $paciente->update($request->all());
-            return $this->success($paciente, 'Paciente atualizado com sucesso', 200);
-            
-        } catch (ModelNotFoundException $e) {
-            
-            return $this->error("Não foi possível encontrar paciente de id: $id", 404);
-        }
+        
+        return $this->pacientesServices->updatePatient($request, $id);
+
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *  @return \Traits\ApiResponse
-     * @response 200 {
-     * "data": null
-     * "message": "Paciente deletado com sucesso",
-     * "code": "200",
-     */
     public function destroy(string $id)
     {
     
-        try {
-            $paciente = Pacientes::findOrFail($id);
-            $paciente->delete();
-            return $this->success(null, 'Paciente deletado com sucesso', 200);
-            
-        } catch (ModelNotFoundException $e) {
-            
-            return $this->error("Não foi possível encontrar dados de paciente de id: $id", 404);
-        }
+        return $this->pacientesServices->deletePatient($id);
+
     }
 }

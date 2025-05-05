@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\PacientesServices;
+use App\Http\Services\ProcedimentoServices;
 use App\Models\Procedimento;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
@@ -12,18 +14,17 @@ class ProcedimentoController extends Controller
 
     use ApiResponse;
 
-    /**
-     * 
-     */
+    protected $procedimentoServices;
+
+    public function __construct(ProcedimentoServices $procedimentoServices)
+    {
+        $this->procedimentoServices = $procedimentoServices;
+    }
+
     public function index()
     {
-        try {
-            $procedimentos = Procedimento::all();
-            return $this->success($procedimentos, "Todos os procedimentos", 200);
+        return $this->procedimentoServices->getAllProcedures();
 
-        } catch (\Exception $e) {
-            return $this->error("Erro ao buscar procedimentos", 500, $e);
-        } 
     }
 
     /**
@@ -33,15 +34,7 @@ class ProcedimentoController extends Controller
     {
         //validações
 
-
-        try {
-            $procedimento = Procedimento::create($request->all());
-            
-            return $this->success($procedimento, "Procedimento cadastrado!", 201);
-        } catch (\Exception $e){
-
-            $this->error("Erro ao cadastrar procedimento", 500 ,$e);
-        }
+        return $this->procedimentoServices->createProcedures($request);
     }
 
     /**
