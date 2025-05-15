@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ValidationUsersStore;
-use App\Http\Services\AuthService;
+use App\Http\Services\AuthServices;
 
 class AuthController extends Controller
 {
     protected $AuthService;
 
-    public function __construct(AuthService $AuthService) {
+    public function __construct(AuthServices $AuthService) {
 
         $this->middleware('auth:api')->except(['login', 'register']);
         $this->AuthService = $AuthService;

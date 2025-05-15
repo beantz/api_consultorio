@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pacientes;
 use Illuminate\Http\Request;
 use App\Traits\ApiResponse;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Requests\ValidationPacientes;
+use App\Http\Requests\ValidationUsers;
+use App\Http\Requests\ValidationUsersStore;
 use App\Http\Services\PacientesServices;
-use App\Models\User;
 
 /**
  * controller para fazer gerenciamento do crud de pacientes
@@ -30,7 +29,7 @@ class PacientesController extends Controller
 
     }
 
-    public function store(ValidationPacientes $request)
+    public function store(ValidationUsersStore $request)
     {
         $request->validated();
 

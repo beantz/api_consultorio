@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Services\PacientesServices;
+use App\Http\Requests\ValidationProcedimentos;
 use App\Http\Services\ProcedimentoServices;
-use App\Models\Procedimento;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ProcedimentoController extends Controller
 {
@@ -30,9 +28,9 @@ class ProcedimentoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ValidationProcedimentos $request)
     {
-        //validações
+        $request->validated();
 
         return $this->procedimentoServices->createProcedures($request);
     }
@@ -42,14 +40,8 @@ class ProcedimentoController extends Controller
      */
     public function show(string $id)
     {
-        try {
-            $procedimento = Procedimento::findOrFail($id);
+        return $this->procedimentoServices->show($id);
 
-            return $this->success($procedimento, "Procedimento encontrado!", 201);
-        } catch (ModelNotFoundException $e) {
-
-            return $this->error("Erro ao buscar procedimento de id: $id", 404, $e->getMessage());
-        }
     }
 
     /**
@@ -57,15 +49,8 @@ class ProcedimentoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        try {
-            $procedimento = Procedimento::findOrFail($id);
-            $procedimento->update($request->all());
+        return $this->procedimentoServices->update($request, $id);
 
-            return $this->success($procedimento, "Procedimento atualizado com sucesso!", 200);
-        } catch (ModelNotFoundException $e) {
-
-            return $this->error("Erro ao buscar procedimento de id: $id", 404, $e->getMessage());
-        }
     }
 
     /**
@@ -73,14 +58,7 @@ class ProcedimentoController extends Controller
      */
     public function destroy(string $id)
     {
-        try {
-            $procedimento = Procedimento::findOrFail($id);
-            $procedimento->delete();
-            return $this->success(null, 'Procedimento deletado com sucesso', 200);
-            
-        } catch (ModelNotFoundException $e) {
-            
-            return $this->error("Não foi possível encontrar procedimento de id: $id", 404);
-        }
+        return $this->procedimentoServices->destroy($id);
+
     }
 }

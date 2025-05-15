@@ -2,10 +2,11 @@
 
 namespace App\Http\Requests;
 
-use App\Users;
+use App\Enums\Users;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Enum;
 
 class ValidationUsersStore extends FormRequest
@@ -34,7 +35,8 @@ class ValidationUsersStore extends FormRequest
             'allergies' => 'max:100',
             'medicines_used' => 'max:100',
             //verifica se o user_type fornecido existe no enum
-            'user_type' => ['required', new Enum(Users::class)]
+            // 'user_type' => ['required', new Enum(Users::class)]
+            'user_type' => ['required', Rule::in(array_column(Users::cases(), 'value'))]
         ];
     }
 

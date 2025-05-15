@@ -4,7 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-use App\Users;
+use App\Enums\Users;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -16,7 +16,8 @@ class User extends Authenticatable implements JWTSubject
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasApiTokens, HasFactory, Notifiable;
 
-    //definindo a propriedade da classe user onde vai definir user_type com valores de uma das constantes em enum 
+    //definindo a propriedade da classe user onde vai definir user_type com valores de uma das constantes em enum
+    //casts serve pra isso, converter valores de enums
     protected $casts = [
         'user_type' => Users::class
     ];

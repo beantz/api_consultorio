@@ -16,7 +16,7 @@ class PacientesRepositories {
 
     public function create($request) {
 
-        $paciente = Pacientes::create($request->all());
+        $paciente = User::create($request->all());
         return $paciente;
 
     }
