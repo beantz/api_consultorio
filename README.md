@@ -33,10 +33,13 @@ Clone o projeto:
 Para fazer o deploy desse projeto rode
 
 ```
-  php artisan serve
+    php artisan serve
 ```
 
 Crie as tabelas no banco
 ```
-  php artisan migrate
+    php artisan migrate
 ```
+
+## ps:
+Conforme a ideia for amadurecendo e o projeto evoluindo, vou está documentando tudo no readme <3
