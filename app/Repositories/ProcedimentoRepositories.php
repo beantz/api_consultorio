@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Repositories;
+namespace App\Repositories;
 
 use App\Models\Procedimento;
+use App\Interfaces\ProcedimentosRepositoriesInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class ProcedimentoRepositories {
+class ProcedimentoRepositories implements ProcedimentosRepositoriesInterface{
 
     public function getAllProcedures() {
         $procedimentos = Procedimento::all();
@@ -21,7 +22,6 @@ class ProcedimentoRepositories {
     
         $procedimento = Procedimento::findOrFail($id);
         return $procedimento;
-    
     }
 
 }

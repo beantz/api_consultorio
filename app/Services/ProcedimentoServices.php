@@ -1,28 +1,24 @@
 <?php
 
-namespace App\Http\Services;
+namespace App\Services;
 
 use App\Traits\ApiResponse;
-use App\Http\Repositories\ProcedimentoRepositories;
+use App\Repositories\ProcedimentoRepositories;
 use App\Models\Procedimento;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use App\Facades\ProcedimentoRepositoryFacades;
 
 class ProcedimentoServices {
 
     use ApiResponse;
 
-    protected $procedimentoRepositories;
-
-    public function __construct(ProcedimentoRepositories $procedimentoRepositories)
-    {
-        $this->procedimentoRepositories = $procedimentoRepositories;
-    }
-
     public function getAllProcedures()
     {
         try {
-            $procedimentos = $this->procedimentoRepositories->getAllProcedures();
+            
+            $procedimentos = ProcedimentoRepositoryFacades::getAllProcedures();
+
             return $this->success($procedimentos, "Todos os procedimentos", 200);
 
         } catch (\Exception $e) {
@@ -34,7 +30,7 @@ class ProcedimentoServices {
     {
 
         try {
-            $procedimento = $this->procedimentoRepositories->createProcedures($request);
+            $procedimento = ProcedimentoRepositoryFacades::createProcedures($request);
             
             return $this->success($procedimento, "Procedimento cadastrado!", 201);
         } catch (\Exception $e){
@@ -47,7 +43,7 @@ class ProcedimentoServices {
 
         try {
             
-            $procedimento = $this->procedimentoRepositories->findProcedure($id);
+            $procedimento = ProcedimentoRepositoryFacades::findProcedure($id);
 
             return $this->success($procedimento, "Procedimento encontrado!", 201);
         } catch (ModelNotFoundException $e) {
@@ -60,7 +56,7 @@ class ProcedimentoServices {
     public function update($request, $id) {
 
         try {
-            $procedimento = $this->procedimentoRepositories->findProcedure($id);
+            $procedimento = ProcedimentoRepositoryFacades::findProcedure($id);
             $procedimento->update($request->all());
 
             return $this->success($procedimento, "Procedimento atualizado com sucesso!", 200);
@@ -74,7 +70,7 @@ class ProcedimentoServices {
     public function destroy($id) {
 
         try {
-            $procedimento = Procedimento::findOrFail($id);
+            $procedimento = ProcedimentoRepositoryFacades::findProcedure($id);
             $procedimento->delete();
             return $this->success(null, 'Procedimento deletado com sucesso', 200);
             

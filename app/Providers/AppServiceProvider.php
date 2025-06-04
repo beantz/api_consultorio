@@ -2,11 +2,11 @@
 
 namespace App\Providers;
 
-use App\Http\Repositories\PacientesRepositories;
-use App\Http\Repositories\ProcedimentoRepositories;
-use App\Http\Services\AuthServices;
-use App\Http\Services\PacientesServices;
-use App\Http\Services\ProcedimentoServices;
+use App\Repositories\PacientesRepositories;
+use App\Repositories\ProcedimentoRepositories;
+use App\Services\AuthServices;
+use App\Services\PacientesServices;
+use App\Services\ProcedimentoServices;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -16,11 +16,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(AuthServices::class);
-        $this->app->bind(PacientesServices::class);
-        $this->app->bind(PacientesRepositories::class);
-        $this->app->bind(ProcedimentoServices::class);
-        $this->app->bind(ProcedimentoRepositories::class);
+        // $this->app->bind(AuthServices::class);
+
+        $this->app->bind('auth.services', AuthServices::class);
+        $this->app->bind('paciente.services', PacientesServices::class);
+        $this->app->bind('paciente.repository', PacientesRepositories::class);
+        $this->app->bind('procedimento.services', ProcedimentoServices::class);
+        $this->app->bind('procedimento.repository', ProcedimentoRepositories::class);
     }
 
     /**

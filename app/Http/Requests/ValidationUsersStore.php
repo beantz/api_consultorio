@@ -35,7 +35,6 @@ class ValidationUsersStore extends FormRequest
             'allergies' => 'max:100',
             'medicines_used' => 'max:100',
             //verifica se o user_type fornecido existe no enum
-            // 'user_type' => ['required', new Enum(Users::class)]
             'user_type' => ['required', Rule::in(array_column(Users::cases(), 'value'))]
         ];
     }

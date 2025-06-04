@@ -4,23 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ValidationUsersStore;
-use App\Http\Services\AuthServices;
+use App\Facades\AuthServicesFacades;
 
 class AuthController extends Controller
 {
-    protected $AuthService;
-
-    public function __construct(AuthServices $AuthService) {
-
-        $this->middleware('auth:api')->except(['login', 'register']);
-        $this->AuthService = $AuthService;
-    }
 
     public function login()
     {
         $credentials = request(['email', 'password']);
 
-        return $this->AuthService->verifyCredentials($credentials);
+        return AuthServicesFacades::verifyCredentials($credentials);
 
     }
 
@@ -28,18 +21,18 @@ class AuthController extends Controller
     {
         $validates = $request->validated();
 
-        return $this->AuthService->register($validates);
+        return AuthServicesFacades::register($validates);
 
     }
 
     public function logout()
     {
-        return $this->AuthService->logout();
+        return AuthServicesFacades::logout();
     }
 
     public function refresh()
     {
-        return $this->AuthService->refresh();
+        return AuthServicesFacades::refresh();
 
     }
 }

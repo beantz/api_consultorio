@@ -12,7 +12,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('usuario.logout'
 Route::post('/refresh', [AuthController::class, 'refresh'])->name('usuario.refresh');
 
 Route::middleware('auth:api')->prefix('Pacientes')->group( function() {
-    Route::get('Pacientes', [PacientesController::class, 'index'])->name('pacientes.index');
+    Route::get('/Pacientes', [PacientesController::class, 'index'])->name('pacientes.index');
     Route::post('/Cadastrar', [PacientesController::class, 'store'])->name('pacientes.store');
     Route::put('/Atualizar/{id}', [PacientesController::class, 'update'])->name('pacientes.update');
     Route::delete('/Deletar/{id}', [PacientesController::class, 'destroy'])->name('pacientes.destroy');

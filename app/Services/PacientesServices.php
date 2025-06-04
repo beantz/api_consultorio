@@ -1,23 +1,24 @@
 <?php
 
-namespace App\Http\Services;
+namespace App\Services;
 
-use App\Http\Repositories\PacientesRepositories;
+use App\Repositories\PacientesRepositories;
 use App\Models\Pacientes;
 use App\Models\User;
 use App\Traits\ApiResponse;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Facades\PacientesRepositoriesFacades;
 
 class PacientesServices {
 
     use ApiResponse;
 
-    protected $pacientesRepositories;
+    // protected $pacientesRepositories;
 
-    public function __construct(PacientesRepositories $pacientesRepositories)
-    {
-        $this->pacientesRepositories = $pacientesRepositories;
-    }
+    // public function __construct(PacientesRepositories $pacientesRepositories)
+    // {
+    //     $this->pacientesRepositories = $pacientesRepositories;
+    // }
 
     /**
      * @return \Traits\ApiResponse
@@ -31,7 +32,7 @@ class PacientesServices {
     public function getAllPatients() {
 
         try {
-            $pacientes = $this->pacientesRepositories->getAllUsers();
+            $pacientes = PacientesRepositoriesFacades::getAllUsers();
             return $this->success($pacientes, 'Todos os pacientes registrados', 200);
             
         } catch (\Exception $e) {
@@ -52,7 +53,7 @@ class PacientesServices {
     public function registerPatients($request) {
 
         try {
-            $paciente = $this->pacientesRepositories->create($request);
+            $paciente = PacientesRepositoriesFacades::create($request);
             return $this->success($paciente, 'Paciente cadastrado com sucesso', 201);
             
         } catch (\Exception $e) {
@@ -74,7 +75,7 @@ class PacientesServices {
 
         try {
             
-            $pacientes = $this->pacientesRepositories->getAllUsers();
+            $pacientes = PacientesRepositoriesFacades::getAllUsers();
             
             $paciente = $pacientes->find($id);
 
@@ -102,7 +103,7 @@ class PacientesServices {
 
         try {
             
-            $pacientes = $this->pacientesRepositories->getAllUsers();
+            $pacientes = PacientesRepositoriesFacades::getAllUsers();
             $paciente = $pacientes->find($id);
 
             if(is_null($paciente)){
@@ -130,7 +131,7 @@ class PacientesServices {
     public function deletePatient($id) {
 
         try {
-            $pacientes = $this->pacientesRepositories->getAllUsers();
+            $pacientes = PacientesRepositoriesFacades::getAllUsers();
             $paciente = $pacientes->find($id);
 
             if(is_null($paciente)){

@@ -123,6 +123,12 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
-    PHPOpenSourceSaver\JWTAuth\Providers\LaravelServiceProvider::class,
+    'aliases' => [
+        'procedimento.repository' => \App\Repositories\ProcedimentoRepositories::class,
+        'procedimento.services' => \App\Services\ProcedimentoServices::class,
+        'paciente.repository' => \App\Repositories\PacientesRepositories::class,
+        'paciente.services' => \App\Services\PacientesServices::class,
+        'auth.services' => \App\Services\AuthServices::class
+    ],
 
 ];

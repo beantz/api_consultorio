@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Repositories;
+namespace App\Repositories;
 
 use App\Models\Pacientes;
 use App\Models\User;
+use App\Interfaces\PacientesRepositoriesInterface;
 
-class PacientesRepositories {
+class PacientesRepositories implements PacientesRepositoriesInterface {
 
     public function getAllUsers() {
 

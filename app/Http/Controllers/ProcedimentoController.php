@@ -3,25 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ValidationProcedimentos;
-use App\Http\Services\ProcedimentoServices;
+use App\Services\ProcedimentoServices;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
+use App\Facades\ProcedimentoServicesFacades;
 
 class ProcedimentoController extends Controller
 {
 
     use ApiResponse;
 
-    protected $procedimentoServices;
-
-    public function __construct(ProcedimentoServices $procedimentoServices)
-    {
-        $this->procedimentoServices = $procedimentoServices;
-    }
-
     public function index()
     {
-        return $this->procedimentoServices->getAllProcedures();
+        return ProcedimentoServicesFacades::getAllProcedures();
 
     }
 
@@ -32,7 +26,7 @@ class ProcedimentoController extends Controller
     {
         $request->validated();
 
-        return $this->procedimentoServices->createProcedures($request);
+        return ProcedimentoServicesFacades::createProcedures($request);
     }
 
     /**
@@ -40,7 +34,7 @@ class ProcedimentoController extends Controller
      */
     public function show(string $id)
     {
-        return $this->procedimentoServices->show($id);
+        return ProcedimentoServicesFacades::show($id);
 
     }
 
@@ -49,7 +43,7 @@ class ProcedimentoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        return $this->procedimentoServices->update($request, $id);
+        return ProcedimentoServicesFacades::update($request, $id);
 
     }
 
@@ -58,7 +52,7 @@ class ProcedimentoController extends Controller
      */
     public function destroy(string $id)
     {
-        return $this->procedimentoServices->destroy($id);
+        return ProcedimentoServicesFacades::destroy($id);
 
     }
 }
