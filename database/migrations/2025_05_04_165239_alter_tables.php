@@ -44,7 +44,7 @@ return new class extends Migration
         });
 
         Schema::table('agendamento', function(Blueprint $table) {
-            $table->dropForeign('user_patients_id');
+            $table->dropForeign('agendamento_user_patients_id_foreign');
             $table->dropColumn('user_patients_id');
 
             $table->foreignId('pacientes_id')->nullable()->constrained('pacientes');
