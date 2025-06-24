@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Traits\ApiResponse;
 use App\Http\Requests\ValidationUsersStore;
 use App\Facades\PacientesServicesFacades;
+use App\Services\PacientesService;
 
 /**
  * controller para fazer gerenciamento do crud de pacientes
@@ -14,37 +15,43 @@ class PacientesController extends Controller
 {
     use ApiResponse;
 
+    protected $pacientesService;
+
+    public function __construct(PacientesService $pacientesService)
+    {
+        $this->pacientesService = $pacientesService;
+    }
+
     public function index()
     {
-        return PacientesServicesFacades::getAllPatients();
-
+        return $this->pacientesService->getAll();
     }
 
     public function store(ValidationUsersStore $request)
     {
         $request->validated();
 
-        return PacientesServicesFacades::registerPatients($request);
+        return $this->pacientesService->registerPatients($request);
     }
 
     public function show(string $id)
     {
 
-        return PacientesServicesFacades::findPatient($id);
+        return $this->pacientesService->findPatient($id);
 
     }
 
     public function update(Request $request, string $id)
     {
         
-        return PacientesServicesFacades::updatePatient($request, $id);
+        return $this->pacientesService->updatePatient($request, $id);
 
     }
 
     public function destroy(string $id)
     {
     
-        return PacientesServicesFacades::deletePatient($id);
+        return $this->pacientesService->deletePatient($id);
 
     }
 }

@@ -6,11 +6,11 @@ use App\Models\Pacientes;
 use App\Models\User;
 use App\Interfaces\PacientesRepositoriesInterface;
 
-class PacientesRepositories implements PacientesRepositoriesInterface {
+class PacientesRepositorie implements PacientesRepositoriesInterface {
 
     public function getAllUsers() {
 
-        $pacientes = User::where('user_type', 'paciente')->get();
+        $pacientes = User::where('tipo_usuario', 'paciente')->get();
         return $pacientes;
 
     }

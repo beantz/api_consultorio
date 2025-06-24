@@ -7,7 +7,7 @@ use App\Traits\ApiResponse;
 use PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
-class AuthServices {
+class AuthService {
 
     use ApiResponse;
 

@@ -6,7 +6,7 @@ use App\Models\Procedimento;
 use App\Interfaces\ProcedimentosRepositoriesInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class ProcedimentoRepositories implements ProcedimentosRepositoriesInterface{
+class ProcedimentoRepositorie implements ProcedimentosRepositoriesInterface{
 
     public function getAllProcedures() {
         $procedimentos = Procedimento::all();

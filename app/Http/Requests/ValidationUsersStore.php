@@ -27,15 +27,15 @@ class ValidationUsersStore extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|min:3|max:40',
+            'nome' => 'required|min:3|max:40',
             'email' => 'required|email|unique:users',
-            'password' => 'required|min:8|max:15',
-            'years' => 'numeric',
-            'phone' => 'required|numeric',
-            'allergies' => 'max:100',
-            'medicines_used' => 'max:100',
+            'senha' => 'required|min:8|max:15',
+            'idade' => 'numeric',
+            'telefone' => 'required|numeric',
+            'alergias' => 'max:100',
+            'usando_medicamentos' => 'max:100',
             //verifica se o user_type fornecido existe no enum
-            'user_type' => ['required', Rule::in(array_column(Users::cases(), 'value'))]
+            'tipo_usuario' => ['required', Rule::in(array_column(Users::cases(), 'value'))]
         ];
     }
 
@@ -44,17 +44,17 @@ class ValidationUsersStore extends FormRequest
 
         return [
             'required' => 'O campo :attribute precisa ser prenchido',
-            'name.min' => 'O campo nome só aceita no mínimo 3 caracteres',
-            'name.max' => 'O campo nome só aceita no máximo 40 caracteres',
-            'password.min' => 'O campo senha só aceita no mínimo 8 caracteres',
-            'password.max' => 'O campo senha só aceita no máximo 15 caracteres',
+            'nome.min' => 'O campo nome só aceita no mínimo 3 caracteres',
+            'nome.max' => 'O campo nome só aceita no máximo 40 caracteres',
+            'senha.min' => 'O campo senha só aceita no mínimo 8 caracteres',
+            'senha.max' => 'O campo senha só aceita no máximo 15 caracteres',
             'email.email' => 'E-mail inválido',
             'email.unique' => 'O e-mail inserido já está cadastrado a outro usuário',
-            'years.numeric' => 'O campo idade só aceita dados numéricos',
-            'phone.numeric' => 'O campo contato só aceita dados numéricos',
-            'allergies.max' => 'O campo nome só aceita no máximo 100 caracteres',
-            'medicines_used.max' => 'O campo medicamentos usados só aceita no máximo 100 caracteres',
-            'user_type' => 'Tipo de usuário inválido. Valores aceitos: ' . implode(', ', Users::values()), //$userTypes,
+            'idade.numeric' => 'O campo idade só aceita dados numéricos',
+            'telefone.numeric' => 'O campo contato só aceita dados numéricos',
+            'alergias.max' => 'O campo nome só aceita no máximo 100 caracteres',
+            'usando_medicamentos.max' => 'O campo medicamentos usados só aceita no máximo 100 caracteres',
+            'tipo_usuario' => 'Tipo de usuário inválido. Valores aceitos: ' . implode(', ', Users::values()), //$userTypes,
         ];
     }
 
