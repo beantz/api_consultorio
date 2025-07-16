@@ -66,14 +66,16 @@ class PacientesControllerTest extends TestCase {
 
     public function testRegisterPatientSuccess() {
 
-        $inputData = ['nome' => 'joao', 'idade' => 22, 'email' => 'joao123@gmail.com',
+        $id = 1;
+
+        $inputPatient = ['nome' => 'joao', 'idade' => 22, 'email' => 'joao123@gmail.com',
             'telefone' => '12345678', 'alergias' => 'nao possuo', 'usando_medicamentos' => 'remedio_1', 'senha' => '123123'];
-        $expectedPatient = ['id' => 1, 'nome' => 'joao', 'idade' => 22, 'email' => 'joao123@gmail.com',
-            'telefone' => '12345678', 'alergias' => 'nao possuo', 'usando_medicamentos' => 'remedio_1', 'senha' => '123123'];
+
+        $expectedPatient = $inputPatient + ['id' => $id];
         
         $this->requestMock->expects($this->any())
             ->method('all')
-            ->willReturn($inputData);
+            ->willReturn($inputPatient);
 
         $this->pacientesServiceMock
             ->expects($this->once())
@@ -122,18 +124,19 @@ class PacientesControllerTest extends TestCase {
 
     public function testFindPatientSuccesss() {
 
-        $expectedPatient = [
+        $id = 1;
+
+        $expectedPatient =
             ['id' => '1', 'nome' => 'joao', 'idade' => 22, 'email' => 'joao123@gmail.com',
-            'telefone' => '12345678', 'alergias' => 'nao possuo', 'usando_medicamentos' => 'remedio_1', 'senha' => '123123']
-        ];
+            'telefone' => '12345678', 'alergias' => 'nao possuo', 'usando_medicamentos' => 'remedio_1', 'senha' => '123123'];
 
         $this->pacientesServiceMock
             ->expects($this->once())
             ->method('findPatient')
-            ->with('id')
+            ->with($id)
             ->willReturn($expectedPatient);
 
-        $result = $this->pacientesController->show('id');
+        $result = $this->pacientesController->show($id);
 
         $this->assertEquals(($expectedPatient), $result);
 
@@ -145,26 +148,125 @@ class PacientesControllerTest extends TestCase {
     }
 
     public function testFindPatientFailure() {
+        $id = 2;
 
-        $expectedPatient = [
+        $expectedPatient = 
             ['id' => '1', 'nome' => 'joao', 'idade' => 22, 'email' => 'joao123@gmail.com',
-            'telefone' => '12345678', 'alergias' => 'nao possuo', 'usando_medicamentos' => 'remedio_1', 'senha' => '123123']
-        ];
+            'telefone' => '12345678', 'alergias' => 'nao possuo', 'usando_medicamentos' => 'remedio_1', 'senha' => '123123'];
 
         $this->pacientesServiceMock
             ->expects($this->once())
             ->method('findPatient')
-            ->with('id')
+            ->with($id)
             ->willReturn([
                 'status' => 404,
                 'message' => 'Paciente não encontrado',
                 'error' => 'Erro no banco de dados'
         ]);
 
-        $response = $this->pacientesController->show('id');
+        $response = $this->pacientesController->show($id);
 
         $this->assertEquals(404, $response['status']);
         $this->assertEquals('Paciente não encontrado', $response['message']);
+
+    }
+
+    public function testUpdatePatientSucess() {
+
+        $id = 1;
+
+        $inputPatient = 
+            ['nome' => 'victor', 'idade' => 23, 'email' => 'joao123@gmail.com',
+            'telefone' => '12345678', 'alergias' => 'nao possuo', 'usando_medicamentos' => 'remedio_1', 'senha' => '123123'];
+
+        $expectedPatient = $inputPatient + ['id' => $id];
+
+        $this->requestMock->expects($this->any())
+            ->method('all')
+            ->willReturn($inputPatient);
+
+        $this->pacientesServiceMock
+            ->expects($this->once())
+            ->method('updatePatient')
+            ->with($this->requestMock ,$id)
+            ->willReturn([
+                'status' => 'success',
+                'message' => 'Paciente atualizado com sucesso',
+                'data' => $expectedPatient
+            ]);
+
+        $response = $this->pacientesController->update($this->requestMock, $id);
+
+        $this->assertEquals('success', $response['status']);
+        $this->assertEquals(($expectedPatient), $response['data']);
+
+    }
+
+    public function testUpdatePatientFailure() {
+
+        $id = 1;
+
+        $inputPatient = 
+            ['nome' => 'victor', 'idade' => 23, 'email' => 'joao123@gmail.com',
+            'telefone' => '12345678', 'alergias' => 'nao possuo', 'usando_medicamentos' => 'remedio_1', 'senha' => '123123'];
+
+        $this->requestMock->expects($this->any())
+            ->method('all')
+            ->willReturn($inputPatient);
+
+        $this->pacientesServiceMock
+            ->expects($this->once())
+            ->method('updatePatient')
+            ->with($this->requestMock ,$id)
+            ->willReturn([
+                'status' => 404,
+                'message' => 'Não foi possível atualizar paciente de id: '
+            ]);
+
+        $response = $this->pacientesController->update($this->requestMock, $id);
+
+        $this->assertEquals(404, $response['status']);
+        $this->assertEquals('Não foi possível atualizar paciente de id: ', $response['message']);
+
+    }
+
+    public function testDeletePatientSucess() {
+
+        $id = 1;
+
+        $this->pacientesServiceMock
+            ->expects($this->once())
+            ->method('deletePatient')
+            ->with($id)
+            ->willReturn([
+                'status' => 200,
+                'message' => 'Paciente deletado com sucesso'
+            ]);
+
+        $response = $this->pacientesController->destroy($id);
+
+        $this->assertEquals(200, $response['status']);
+        $this->assertEquals('Paciente deletado com sucesso', $response['message']);
+
+    }
+
+    public function testDeletePatientFailure() {
+
+        $id = 1;
+
+        $this->pacientesServiceMock
+            ->expects($this->once())
+            ->method('deletePatient')
+            ->with($id)
+            ->willReturn([
+                'status' => 404,
+                'message' => 'Não foi possível deletar paciente'
+            ]);
+
+        $response = $this->pacientesController->destroy($id);
+
+        $this->assertEquals(404, $response['status']);
+        $this->assertEquals('Não foi possível deletar paciente', $response['message']);
 
     }
 }
