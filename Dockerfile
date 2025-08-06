@@ -1,4 +1,3 @@
-# Estágio 1 - Build
 #build estagio de dependencia
 #runtime estagio de execução
 
@@ -9,18 +8,17 @@ COPY . .
 #instala dependencias e otimiza o carregamento automatico das classes
 RUN composer install --no-dev --optimize-autoloader
 
-# Estágio 2 - Runtime
 FROM php:8.4-cli
 
 WORKDIR /app
 #copia o builder definido no topo para dentro de app
 COPY --from=builder /app .
 
-# Instala extensões PHP necessárias
+#instala extensões PHP necessárias
 #pdo é PHP Data Objects (interface de acesso a bancos de dados) e o pdo_mysql é o driver do mysql 
 RUN docker-php-ext-install pdo pdo_mysql
 
-# Expõe a porta do servidor embutido
+#expõe a porta do servidor embutido
 EXPOSE 8000
 
 # Comando para iniciar o servidor
