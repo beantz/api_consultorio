@@ -24,34 +24,57 @@ class PacientesController extends Controller
 
     public function index()
     {
-        return $this->pacientesService->getAll();
+        return response()->json($this->pacientesService->getAll());
     }
 
     public function store(ValidationUsersStore $request)
     {
         $request->validated();
+        $response = $this->pacientesService->registerPatients($request);
+        
+        /*dessa forma para que seja encaminhado o statuscode que é enviado pelo service*/
+        $statusCode = (string) $response['status'];
 
-        return $this->pacientesService->registerPatients($request);
+        if($statusCode === '.E500'){
+            return response()->json($response, 201);
+        } else {
+            return response()->json($response , $statusCode);
+        }
+        
     }
 
     public function show(string $id)
     {
-
-        return $this->pacientesService->findPatient($id);
-
+        return response()->json($this->pacientesService->findPatient($id));
     }
 
     public function update(Request $request, string $id)
     {
         
-        return $this->pacientesService->updatePatient($request, $id);
+        $response = $this->pacientesService->updatePatient($request, $id);
+
+        $statusCode = (string) $response['status'];
+
+        if($statusCode === '.E404'){
+            return response()->json($response, 200);
+        } else {
+            return response()->json($response , $statusCode);
+        }
 
     }
 
     public function destroy(string $id)
     {
     
-        return $this->pacientesService->deletePatient($id);
+        $response = $this->pacientesService->deletePatient($id);
+
+        $statusCode = (string) $response['status'];
+
+        if($statusCode === '.E404'){
+            return response()->json($response, 200);
+        } else {
+            return response()->json($response , $statusCode);
+        }
 
     }
 }

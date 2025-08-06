@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    command: "php artisan serve --host=0.0.0.0 --port=8000"
+    volumes:
+      - .:/var/www
+    env_file:
+      - .env
+    networks:
+      - app-network
+    depends_on:
+      - db  #garante que o mysql inicie primeiro
+
+  db:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    networks:
+      - app-network
+
+#declara fora dos serviços a rede propriamente dita
+networks:
+  app-network:
+    driver: bridge

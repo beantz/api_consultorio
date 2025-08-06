@@ -58,9 +58,8 @@ class PacientesService {
             
         } catch (\Exception $e) {
             
-            return $this->error('Falha ao cadastrar paciente', 500, $e->getMessage());
+            return $this->error('Falha ao cadastrar paciente', $e->getMessage(), 500);
         }
-
     }
 
     /**

@@ -128,7 +128,8 @@ return [
         'procedimento.services' => \App\Services\ProcedimentoServices::class,
         'paciente.repository' => \App\Repositories\PacientesRepositories::class,
         'paciente.services' => \App\Services\PacientesServices::class,
-        'auth.services' => \App\Services\AuthServices::class
+        'auth.services' => \App\Services\AuthServices::class,
+        'Route' => Illuminate\Support\Facades\Route::class
     ],
 
 ];
