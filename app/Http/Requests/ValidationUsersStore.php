@@ -29,7 +29,7 @@ class ValidationUsersStore extends FormRequest
         return [
             'nome' => 'required|min:3|max:40',
             'email' => 'required|email|unique:users',
-            'senha' => 'required|min:8|max:15',
+            'password' => 'required|min:8|max:15',
             'idade' => 'numeric',
             'telefone' => 'required|numeric',
             'alergias' => 'max:100',
@@ -46,15 +46,15 @@ class ValidationUsersStore extends FormRequest
             'required' => 'O campo :attribute precisa ser prenchido',
             'nome.min' => 'O campo nome só aceita no mínimo 3 caracteres',
             'nome.max' => 'O campo nome só aceita no máximo 40 caracteres',
-            'senha.min' => 'O campo senha só aceita no mínimo 8 caracteres',
-            'senha.max' => 'O campo senha só aceita no máximo 15 caracteres',
+            'password.min' => 'O campo senha só aceita no mínimo 8 caracteres',
+            'password.max' => 'O campo senha só aceita no máximo 15 caracteres',
             'email.email' => 'E-mail inválido',
             'email.unique' => 'O e-mail inserido já está cadastrado a outro usuário',
             'idade.numeric' => 'O campo idade só aceita dados numéricos',
             'telefone.numeric' => 'O campo contato só aceita dados numéricos',
             'alergias.max' => 'O campo nome só aceita no máximo 100 caracteres',
             'usando_medicamentos.max' => 'O campo medicamentos usados só aceita no máximo 100 caracteres',
-            'tipo_usuario' => 'Tipo de usuário inválido. Valores aceitos: ' . implode(', ', Users::values()), //$userTypes,
+            'tipo_usuario' => 'Tipo de usuário inválido. Valores aceitos: ' . implode(', ', Users::values()),
         ];
     }
 

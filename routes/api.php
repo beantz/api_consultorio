@@ -13,7 +13,7 @@ Route::post('/refresh', [AuthController::class, 'refresh'])->name('usuario.refre
 
 Route::middleware('auth:api')->prefix('Pacientes')->group( function() {
     Route::get('/Pacientes', [PacientesController::class, 'index'])->name('pacientes.index');
-    Route::post('/Cadastrar', [PacientesController::class, 'store'])->name('pacientes.store');
+    Route::post('/Cadastrar', [PacientesController::class, 'register'])->name('pacientes.store');
     Route::put('/Atualizar/{id}', [PacientesController::class, 'update'])->name('pacientes.update');
     Route::delete('/Deletar/{id}', [PacientesController::class, 'destroy'])->name('pacientes.destroy');
 });
@@ -30,4 +30,4 @@ Route::middleware('auth:api')->prefix('/Procedimentos')->group( function() {
 
 });
 
-//Route::post('Admin/Register', [AdminController::class, 'registeredByAdmin']);
+// Route::post('Admin/Register', [AdminController::class, 'registeredByAdmin']);

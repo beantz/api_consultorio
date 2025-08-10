@@ -13,6 +13,12 @@ class AuthService {
 
     public function verifyCredentials($credentials) {
 
+        $user = User::where('email', $credentials['email'])->where('tipo_usuario', 'paciente')->first();
+        
+        if($user) {
+            return response()->json(['error' => 'Pacientes não podem acessar o administrativo!'], 401);
+        }
+
         try {
             if (!$token = JWTAuth::attempt($credentials)) { 
                     return response()->json(['error' => 'Credenciais inválidas'], 401);
@@ -26,6 +32,8 @@ class AuthService {
     }
 
     public function register($validates) {
+
+        $validates['password'] = bcrypt($validates['password']);
 
         $user = User::create($validates);
 

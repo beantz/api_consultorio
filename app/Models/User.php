@@ -34,7 +34,7 @@ class User extends Authenticatable implements JWTSubject
         'telefone',
         'alergias',
         'usando_medicamentos',
-        'senha',
+        'password',
         'tipo_usuario'
     ];
 
@@ -68,4 +68,9 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims() {
         return [];
     }
+
+    // public function setPasswordAttribute($value)
+    // {
+    //     $this->attributes['senha'] = bcrypt($value);
+    // }
 }

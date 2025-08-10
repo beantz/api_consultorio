@@ -1,6 +1,5 @@
 #build estagio de dependencia
 #runtime estagio de execução
-
 FROM composer:2.8 AS builder
 
 WORKDIR /app
