@@ -22,7 +22,10 @@ class ProcedimentoController extends Controller
 
     public function index()
     {
-        return $this->procedimentoService->getAllProcedures();
+        $response = $this->procedimentoService->getAllProcedures();
+
+        $code = $response->status();
+        return response()->json([$response], $code);
 
     }
 
@@ -33,7 +36,10 @@ class ProcedimentoController extends Controller
     {
         $request->validated();
 
-        return $this->procedimentoService->createProcedures($request);
+        $response = $this->procedimentoService->createProcedures($request);
+
+        $code = $response->status();
+        return response()->json([$response], $code);
     }
 
     /**
@@ -41,7 +47,10 @@ class ProcedimentoController extends Controller
      */
     public function show(string $id)
     {
-        return $this->procedimentoService->show($id);
+        $response = $this->procedimentoService->show($id);
+
+        $code = $response->status();
+        return response()->json([$response], $code);
 
     }
 
@@ -50,7 +59,10 @@ class ProcedimentoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        return $this->procedimentoService->update($request, $id);
+        $response = $this->procedimentoService->update($request, $id);
+
+        $code = $response->status();
+        return response()->json([$response], $code);
 
     }
 
@@ -59,7 +71,10 @@ class ProcedimentoController extends Controller
      */
     public function destroy(string $id)
     {
-        return $this->procedimentoService->destroy($id);
+        $response = $this->procedimentoService->destroy($id);
+
+        $code = $response->status();
+        return response()->json([$response], $code);
 
     }
 }

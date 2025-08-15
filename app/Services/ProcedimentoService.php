@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Traits\ApiResponse;
-use App\Repositories\ProcedimentoRepositories;
+use App\Repositories\ProcedimentoRepositorie;
 use App\Models\Procedimento;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -13,20 +13,23 @@ class ProcedimentoService {
 
     use ApiResponse;
 
-    protected $procedimentoRepositories;
+    protected $procedimentoRepositorie;
 
-    public function __construct(ProcedimentoRepositories $procedimentoRepositories)
+    public function __construct(ProcedimentoRepositorie $procedimentoRepositorie)
     {
-        $this->procedimentoRepositories = $procedimentoRepositories;
+        $this->procedimentoRepositorie = $procedimentoRepositorie;
     }
 
     public function getAllProcedures()
     {
         try {
             
-            $procedimentos = $this->procedimentoRepositories->getAllProcedures();
+            $procedimentos = $this->procedimentoRepositorie->getAllProcedures();
 
-            return $this->success($procedimentos, "Todos os procedimentos", 200);
+            if($procedimentos->count() > 0) {
+                return $this->success($procedimentos, "Todos os procedimentos", 200);
+            }
+            return $this->error("Sem procesdimentos cadastrados", 404);
 
         } catch (\Exception $e) {
             return $this->error("Erro ao buscar procedimentos", 500, $e);
@@ -37,7 +40,7 @@ class ProcedimentoService {
     {
 
         try {
-            $procedimento = $this->procedimentoRepositories->createProcedures($request);
+            $procedimento = $this->procedimentoRepositorie->createProcedures($request);
             
             return $this->success($procedimento, "Procedimento cadastrado!", 201);
         } catch (\Exception $e){
@@ -50,7 +53,7 @@ class ProcedimentoService {
 
         try {
             
-            $procedimento = $this->procedimentoRepositories->findProcedure($id);
+            $procedimento = $this->procedimentoRepositorie->findProcedure($id);
 
             return $this->success($procedimento, "Procedimento encontrado!", 201);
         } catch (ModelNotFoundException $e) {
@@ -63,7 +66,7 @@ class ProcedimentoService {
     public function update($request, $id) {
 
         try {
-            $procedimento = $this->procedimentoRepositories->findProcedure($id);
+            $procedimento = $this->procedimentoRepositorie->findProcedure($id);
             $procedimento->update($request->all());
 
             return $this->success($procedimento, "Procedimento atualizado com sucesso!", 200);
@@ -77,7 +80,7 @@ class ProcedimentoService {
     public function destroy($id) {
 
         try {
-            $procedimento = $this->procedimentoRepositories->findProcedure($id);
+            $procedimento = $this->procedimentoRepositorie->findProcedure($id);
             $procedimento->delete();
             return $this->success(null, 'Procedimento deletado com sucesso', 200);
             

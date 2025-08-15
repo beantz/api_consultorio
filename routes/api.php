@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AgendamentoController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PacientesController;
 use App\Http\Controllers\ProcedimentoController;
@@ -13,7 +14,7 @@ Route::post('/refresh', [AuthController::class, 'refresh'])->name('usuario.refre
 
 Route::middleware('auth:api')->prefix('Pacientes')->group( function() {
     Route::get('/Pacientes', [PacientesController::class, 'index'])->name('pacientes.index');
-    Route::post('/Cadastrar', [PacientesController::class, 'register'])->name('pacientes.store');
+    Route::post('/Cadastrar', [PacientesController::class, 'store'])->name('pacientes.store');
     Route::put('/Atualizar/{id}', [PacientesController::class, 'update'])->name('pacientes.update');
     Route::delete('/Deletar/{id}', [PacientesController::class, 'destroy'])->name('pacientes.destroy');
 });
@@ -27,6 +28,16 @@ Route::middleware('auth:api')->prefix('/Procedimentos')->group( function() {
     Route::post('/Cadastrar', [ProcedimentoController::class, 'store'])->name('procedimento.cadastrar');
     Route::put('/Atualizar/{id}', [ProcedimentoController::class, 'update'])->name('procedimento.atualizar');
     Route::delete('/Deletar/{id}', [ProcedimentoController::class, 'destroy'])->name('procedimento.deletar');
+
+});
+
+//adicionar midleware depois
+Route::prefix('/Agendamentos')->group( function() {
+    Route::get('/TodosAgendamentos', [AgendamentoController::class, 'index'])->name('agendamento.index');
+    Route::get('/Visualizar/{id}', [AgendamentoController::class, 'show'])->name('agendamento.visualizar');
+    Route::post('/Cadastrar', [AgendamentoController::class, 'store'])->name('agendamento.cadastrar');
+    Route::put('/Atualizar/{id}', [AgendamentoController::class, 'update'])->name('agendamento.atualizar');
+    Route::delete('/Deletar/{id}', [AgendamentoController::class, 'destroy'])->name('agendamento.deletar');
 
 });
 

@@ -24,28 +24,29 @@ class PacientesController extends Controller
 
     public function index()
     {
-        return response()->json($this->pacientesService->getAll());
+        $response = $this->pacientesService->getAll();
+        //resgatando o codigo para vindo do service e mandando pelo json no controller
+        $code = $response->status();
+        return response()->json([$response], $code);
     }
 
     public function store(ValidationUsersStore $request)
     {
         $request->validated();
         $response = $this->pacientesService->registerPatients($request);
-        
-        /*dessa forma para que seja encaminhado o statuscode que é enviado pelo service*/
-        $statusCode = (string) $response['status'];
 
-        if($statusCode === '.E500'){
-            return response()->json($response, 201);
-        } else {
-            return response()->json($response , $statusCode);
-        }
+        $code = $response->status();
+        return response()->json([$response], $code);
         
     }
 
     public function show(string $id)
     {
-        return response()->json($this->pacientesService->findPatient($id));
+        $response = $this->pacientesService->findPatient($id);
+
+        $code = $response->status();
+        return response()->json([$response], $code);
+
     }
 
     public function update(Request $request, string $id)
@@ -53,13 +54,8 @@ class PacientesController extends Controller
         
         $response = $this->pacientesService->updatePatient($request, $id);
 
-        $statusCode = (string) $response['status'];
-
-        if($statusCode === '.E404'){
-            return response()->json($response, 200);
-        } else {
-            return response()->json($response , $statusCode);
-        }
+        $code = $response->status();
+        return response()->json([$response], $code);
 
     }
 
@@ -68,13 +64,8 @@ class PacientesController extends Controller
     
         $response = $this->pacientesService->deletePatient($id);
 
-        $statusCode = (string) $response['status'];
-
-        if($statusCode === '.E404'){
-            return response()->json($response, 200);
-        } else {
-            return response()->json($response , $statusCode);
-        }
+        $code = $response->status();
+        return response()->json([$response], $code);
 
     }
 }

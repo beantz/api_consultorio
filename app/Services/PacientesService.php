@@ -37,7 +37,8 @@ class PacientesService {
             
         } catch (\Exception $e) {
             
-            return $this->error('Falha ao listar pacientes', 500, $e->getMessage());
+            //return $this->error('Falha ao listar pacientes', 500, $e->getMessage());
+            return response()->json(['Falha ao listar pacientes', 500, $e->getMessage()]);
         }
 
     }
@@ -85,7 +86,7 @@ class PacientesService {
 
         //recuperar exception e $e recebe uma instancia da exception
         } catch (\Exception $e) {
-            return $this->error('Paciente não encontrado', 404, $e->getMessage()); 
+            return $this->error('Falha ao procurar paciente', 500, $e->getMessage()); 
         }
 
     }

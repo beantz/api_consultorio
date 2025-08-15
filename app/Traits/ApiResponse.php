@@ -4,29 +4,27 @@ namespace App\Traits;
 
 trait ApiResponse
 {
-    protected function success($data, ?string $message = null, $token = null ,int $code = 200)
+    protected function success($data, ?string $message = null, int $code)
     {
         return response()->json([
             'status' => 'success',
             'message' => $message,
             'data' => $data,
-            'token' => $token,
             'status' => $code
         ], $code);
     }
 
-    protected function error(string $message, int $code, $errors = null)
+    protected function error(string $message, int $code)
     {
         return response()->json([
             'status' => 'error',
             'message' => $message,
-            'errors' => $errors,
             'status' => $code 
         ], $code);
     }
     
-    protected function notFound(string $resource = 'Recurso')
-    {
-        return $this->error("{$resource} não encontrado", 404);
-    }
+    // protected function notFound(string $resource = 'Recurso')
+    // {
+    //     return $this->error("{$resource} não encontrado", 404);
+    // }
 }

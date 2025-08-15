@@ -2,13 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Agendamento;
+use App\Services\AgendamentoService;
 use Illuminate\Http\Request;
 
 class AgendamentoController extends Controller
 {
+
+    protected $agendamentoService;
+
+    public function __construct(AgendamentoService $agendamentoService)
+    {
+        $this->agendamentoService = $agendamentoService;
+    }
+    
     public function index()
     {
-        //
+        $response = $this->agendamentoService->getAll();
+
+        $code = $response->status();
+        return response()->json([$response], $code);
+        
     }
 
     /**
@@ -16,7 +30,13 @@ class AgendamentoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //criar form request
+        
+        $response = $this->agendamentoService->registerAppointment($request);
+
+        $code = $response->status();
+        return response()->json([$response], $code);
+    
     }
 
     /**
@@ -24,7 +44,10 @@ class AgendamentoController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $response = $this->agendamentoService->findAppointment($id);
+
+        $code = $response->status();
+        return response()->json([$response], $code);
     }
 
     /**
@@ -32,7 +55,10 @@ class AgendamentoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $response = $this->agendamentoService->updateAppointment($request, $id);
+
+        $code = $response->status();
+        return response()->json([$response], $code);
     }
 
     /**
@@ -40,6 +66,9 @@ class AgendamentoController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $response = $this->agendamentoService->deleteAppointment($id);
+
+        $code = $response->status();
+        return response()->json([$response], $code);
     }
 }

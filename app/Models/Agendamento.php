@@ -6,5 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Agendamento extends Model
 {
-    protected $fillable = ['data_consulta', 'relatorio_consulta', 'paciente_id'];
+    protected $table = 'agendamento';
+
+    protected $fillable = ['data_consulta', 'relatorio_consulta', 'user_patients_id'];
 }
