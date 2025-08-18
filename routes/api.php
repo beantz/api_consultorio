@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AgendamentoController;
+use App\Http\Controllers\AgendamentoProcedimentoController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PacientesController;
 use App\Http\Controllers\ProcedimentoController;
@@ -41,4 +42,10 @@ Route::prefix('/Agendamentos')->group( function() {
 
 });
 
-// Route::post('Admin/Register', [AdminController::class, 'registeredByAdmin']);
+Route::prefix('/AgendamentosProcedimentos')->group( function() {
+    Route::get('/TodosAgendamentos', [AgendamentoProcedimentoController::class, 'index'])->name('agendamento.procedimento.index');
+    Route::get('/Visualizar/{id}', [AgendamentoProcedimentoController::class, 'show'])->name('agendamento.procedimento.visualizar');
+    Route::post('/Cadastrar/{id_agendamento}', [AgendamentoProcedimentoController::class, 'store'])->name('agendamento.procedimento.cadastrar');
+    Route::delete('/Deletar/{id}', [AgendamentoProcedimentoController::class, 'destroy'])->name('agendamento.procedimento.deletar');
+
+});

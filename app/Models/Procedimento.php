@@ -9,4 +9,8 @@ class Procedimento extends Model
     protected $table = 'procedimento'; 
 
     protected $fillable = ['nome', 'orientacoes' ,'medicamento_pre', 'medicamento_pos'];
+
+    public function agendamento() {
+        return $this->belongsToMany('App\Models\Agendamento', 'agendamento_procedimento');
+    }
 }

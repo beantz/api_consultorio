@@ -77,4 +77,6 @@ class ProcedimentoController extends Controller
         return response()->json([$response], $code);
 
     }
+
+    //criar método que retornem usuarios de um procedimentos especifico
 }

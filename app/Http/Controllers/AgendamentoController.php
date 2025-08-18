@@ -28,6 +28,7 @@ class AgendamentoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    //ao realizar a avaliação retornar no email do paciente todo o orçamento e relatório da consulta
     public function store(Request $request)
     {
         //criar form request
