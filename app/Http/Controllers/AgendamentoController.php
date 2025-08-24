@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ValidationAgendamento;
 use App\Models\Agendamento;
 use App\Services\AgendamentoService;
 use Illuminate\Http\Request;
@@ -29,9 +30,8 @@ class AgendamentoController extends Controller
      * Store a newly created resource in storage.
      */
     //ao realizar a avaliação retornar no email do paciente todo o orçamento e relatório da consulta
-    public function store(Request $request)
+    public function store(ValidationAgendamento $request)
     {
-        //criar form request
         
         $response = $this->agendamentoService->registerAppointment($request);
 
@@ -54,7 +54,7 @@ class AgendamentoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ValidationAgendamento $request, string $id)
     {
         $response = $this->agendamentoService->updateAppointment($request, $id);
 

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\Requests\ValidationAgendamento;
 use App\Repositories\AgendamentoRepositorie;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
@@ -35,9 +36,9 @@ class AgendamentoService {
 
     }
 
-    public function registerAppointment(Request $request) {
+    public function registerAppointment(ValidationAgendamento $request) {
 
-        //vallidações
+        $request->validated();
 
         try {
             $newAgendamento = $this->agendamentoRepositorie->create($request);
@@ -69,9 +70,9 @@ class AgendamentoService {
         }
     }
 
-    public function updateAppointment($request, $id) {
+    public function updateAppointment(ValidationAgendamento $request, $id) {
 
-        //validações
+        $request->validated();
 
         try {
             

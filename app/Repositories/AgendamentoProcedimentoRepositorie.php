@@ -11,9 +11,15 @@ class AgendamentoProcedimentoRepositorie implements AgendamentoProcedimentoRepos
 
     public function getAll() {
 
-        $agendamentosProcedimentos = AgendamentoProcedimento::all();
+        $agendamentosProcedimentos = Agendamento::with('procedimento')->get();
+
         return $agendamentosProcedimentos;
 
+    }
+
+    public function find($id_agendamento) {
+        $agendamento = Agendamento::where('id', $id_agendamento)->with('procedimento')->first();
+        return $agendamento;
     }
 
     public function create(Request $request, $id_agendamento) {

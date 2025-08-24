@@ -2,6 +2,9 @@
 
 namespace App\Services;
 
+use App\Http\Requests\ValidationAgendamentoProcedimento;
+use App\Models\Agendamento;
+use App\Models\AgendamentoProcedimento;
 use App\Repositories\AgendamentoProcedimentoRepositorie;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
@@ -35,12 +38,11 @@ class AgendamentoProcedimentoService {
 
     }
 
-    public function registerAppointmentProcedure(Request $request, $id_procedimento) {
+    public function registerAppointmentProcedure(ValidationAgendamentoProcedimento $request, $id_procedimento) {
 
-        //vallidações
+        $request->validated();
 
         try {
-
 
             $newAgendamento = $this->agendamentoProcedimentoRepositorie->create($request, $id_procedimento);
             return $this->success($newAgendamento, 'Agendamento com procedimento criado', 201);
@@ -55,8 +57,7 @@ class AgendamentoProcedimentoService {
     public function findAppointmentProcedure($id) {
 
         try {
-            $agendamentos = $this->agendamentoProcedimentoRepositorie->getAll();
-            $agendamento = $agendamentos->find($id);
+            $agendamento = $this->agendamentoProcedimentoRepositorie->find($id);
 
             if(is_null($agendamento)){
                 return $this->error("Agendamento de id: $id não encontrado!", 404);
@@ -71,22 +72,29 @@ class AgendamentoProcedimentoService {
         }
     }
 
-    public function deleteAppointmentProcedure($id) {
+    public function deleteAppointmentProcedure(Request $request, $id_agendamento) {
+
+        $id_procedimento = $request->get('id_procedimento');
 
         try {
-            $agendamentos = $this->agendamentoProcedimentoRepositorie->getAll();
-            $agendamento = $agendamentos->find($id);
+            $agendamento = $this->agendamentoProcedimentoRepositorie->find($id_agendamento);
 
-            if(is_null($agendamento)){
-                return $this->error("Agendamento de id: $id não encontrado!", 404);
+            if(!$agendamento){
+                return $this->error("Agendamento de id: $id_agendamento não encontrado!", 404);
             }
 
-            $agendamento->delete();
-            return $this->success(null, 'Agendamento deletado com sucesso', 200);
+            //verifica se no agendamento especifico possui o procedimento especifico cadastrado
+            if(!$agendamento->procedimento->contains('id', $id_procedimento)){
+
+                return $this->error("Agendamento de id: $id_agendamento não possui procedimentos cadastrados!", 500);
+            }
+
+            $agendamento->procedimento()->detach($id_procedimento);
+            return $this->success(null, "Procedimento do agendamento de id: $id_agendamento deletado com sucesso", 200);
             
         } catch (\Exception $e) {
             
-            return $this->error("Não foi possível deletar agendamento de id: $id", 404);
+            return $this->error("Não foi possível deletar procedimento de id: $id_procedimento", 404);
         }
 
     }

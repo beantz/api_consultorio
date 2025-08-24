@@ -11,14 +11,12 @@ class AgendamentoRepositorie implements AgendamentoRepositoriesInterface {
 
         $agendamentos = Agendamento::all();
         return $agendamentos;
-
     }
 
     public function create($request) {
 
-        $agendamentos = Agendamento::create($request->all());
-        return $agendamentos;
-
+        $agendamento = Agendamento::create($request->all());
+        return $agendamento;
     }
 
 }

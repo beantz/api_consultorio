@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ValidationAgendamentoProcedimento;
 use App\Models\Agendamento;
 use App\Models\AgendamentoProcedimento;
 use App\Services\AgendamentoProcedimentoService;
@@ -38,7 +39,7 @@ class AgendamentoProcedimentoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, $id_agendamento)
+    public function store(ValidationAgendamentoProcedimento $request, $id_agendamento)
     {
         $response = $this->agendamentoProcedimentoService->registerAppointmentProcedure($request, $id_agendamento);
         $code = $response->status();
@@ -76,9 +77,10 @@ class AgendamentoProcedimentoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id_agendamento)
-    {
-        $response = $this->agendamentoProcedimentoService->deleteAppointmentProcedure($id_agendamento);
+    public function destroy(Request $request, $id_agendamento) {
+
+        return $this->agendamentoProcedimentoService->deleteAppointmentProcedure($request, $id_agendamento);
+
         $code = $response->status();
 
         return response()->json([$response], $code);
