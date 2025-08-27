@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Traits\ApiResponse;
 use App\Http\Requests\ValidationUsersStore;
 use App\Facades\PacientesServicesFacades;
+use App\Models\User;
 use App\Services\PacientesService;
 
 /**
@@ -46,6 +47,9 @@ class PacientesController extends Controller
 
         $code = $response->status();
         return response()->json([$response], $code);
+
+        // $user = User::with('agendamentos')->find($id);
+        // dd($user->agendamentos);
 
     }
 

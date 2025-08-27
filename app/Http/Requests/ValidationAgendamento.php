@@ -24,7 +24,6 @@ class ValidationAgendamento extends FormRequest
     public function rules(): array
     {
         return [
-
             'data_consulta' => 'required|date',
             'relatorio_consulta' => 'nullable|string|max:240',
             'user_patients_id' => 'required|integer|exists:users,id'

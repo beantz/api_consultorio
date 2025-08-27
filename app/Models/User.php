@@ -10,6 +10,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
+use App\Models\Agendamento;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -69,8 +71,7 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
-    // public function setPasswordAttribute($value)
-    // {
-    //     $this->attributes['senha'] = bcrypt($value);
-    // }
+    public function agendamentos() : HasMany {
+        return $this->hasMany('App\Models\Agendamento', 'user_patients_id');
+    }
 }
