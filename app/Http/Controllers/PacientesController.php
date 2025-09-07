@@ -47,10 +47,6 @@ class PacientesController extends Controller
 
         $code = $response->status();
         return response()->json([$response], $code);
-
-        // $user = User::with('agendamentos')->find($id);
-        // dd($user->agendamentos);
-
     }
 
     public function update(Request $request, string $id)

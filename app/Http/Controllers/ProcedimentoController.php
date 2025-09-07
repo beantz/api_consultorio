@@ -7,6 +7,7 @@ use App\Services\ProcedimentoService;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
 use App\Facades\ProcedimentoServicesFacades;
+use App\Models\Procedimento;
 
 class ProcedimentoController extends Controller
 {
@@ -78,5 +79,19 @@ class ProcedimentoController extends Controller
 
     }
 
-    //criar método que retornem usuarios de um procedimentos especifico
+    //método que retornem usuarios de um procedimentos especifico
+    public function patientsByProcedures(string $id_procedimento)
+    {
+        $users = [];
+
+        $procedimento = Procedimento::where('id', $id_procedimento)->first();
+        
+        foreach ($procedimento->agendamento as $agendamento) {
+            $users[] = $agendamento->users;
+        }
+
+        return $users;
+
+    }
+
 }

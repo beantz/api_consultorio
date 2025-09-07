@@ -50,8 +50,6 @@ class AgendamentoController extends Controller
         $code = $response->status();
         return response()->json([$response], $code);
 
-        // $agendamento = Agendamento::find($id);
-        // dd($agendamento->users->nome);
     }
 
     /**
