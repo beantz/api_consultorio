@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ValidationAgendamento;
-use App\Models\Agendamento;
 use App\Services\AgendamentoService;
-use Illuminate\Http\Request;
 
 class AgendamentoController extends Controller
 {

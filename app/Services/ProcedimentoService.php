@@ -4,10 +4,8 @@ namespace App\Services;
 
 use App\Traits\ApiResponse;
 use App\Repositories\ProcedimentoRepositorie;
-use App\Models\Procedimento;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use App\Facades\ProcedimentoRepositoryFacades;
 
 class ProcedimentoService {
 
@@ -55,7 +53,7 @@ class ProcedimentoService {
             
             $procedimento = $this->procedimentoRepositorie->findProcedure($id);
 
-            return $this->success($procedimento, "Procedimento encontrado!", 201);
+            return $this->success($procedimento, "Procedimento encontrado!", 200);
         } catch (ModelNotFoundException $e) {
 
             return $this->error("Erro ao buscar procedimento de id: $id", 404, $e->getMessage());
@@ -89,6 +87,23 @@ class ProcedimentoService {
             return $this->error("Não foi possível encontrar procedimento de id: $id", 404);
         }
 
+    }
+
+    public function patientsByProcedures($id_procedimento) {
+        $users = [];
+
+        try {
+            $procedimento = $this->procedimentoRepositorie->patientsByProcedures($id_procedimento);
+
+            foreach ($procedimento->agendamento as $agendamento) {
+                $users[] = $agendamento->users;
+            }
+
+            return $this->success($users, "Pacientes de procedimento: $procedimento->nome encontrado!", 200);
+        } catch (ModelNotFoundException $e) {
+
+            return $this->error("Erro ao buscar procedimento de id: $id_procedimento", 404, $e->getMessage());
+        }
     }
 
 }

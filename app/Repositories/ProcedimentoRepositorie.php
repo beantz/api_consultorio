@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\Models\Procedimento;
 use App\Interfaces\ProcedimentosRepositoriesInterface;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ProcedimentoRepositorie implements ProcedimentosRepositoriesInterface{
 
@@ -21,6 +20,11 @@ class ProcedimentoRepositorie implements ProcedimentosRepositoriesInterface{
     public function findProcedure($id) {
     
         $procedimento = Procedimento::findOrFail($id);
+        return $procedimento;
+    }
+
+    public function patientsByProcedures($id_procedimento) {
+        $procedimento = Procedimento::where('id', $id_procedimento)->first();
         return $procedimento;
     }
 

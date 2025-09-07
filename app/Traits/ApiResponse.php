@@ -23,8 +23,4 @@ trait ApiResponse
         ], $code);
     }
     
-    // protected function notFound(string $resource = 'Recurso')
-    // {
-    //     return $this->error("{$resource} não encontrado", 404);
-    // }
 }

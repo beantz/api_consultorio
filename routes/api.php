@@ -30,16 +30,15 @@ Route::middleware('auth:api')->prefix('/Procedimentos')->group( function() {
     Route::put('/Atualizar/{id}', [ProcedimentoController::class, 'update'])->name('procedimento.atualizar');
     Route::delete('/Deletar/{id}', [ProcedimentoController::class, 'destroy'])->name('procedimento.deletar');
 
+    Route::get('/Pacientes/{id_procedimento}', [ProcedimentoController::class, 'patientsByProcedures'])->name('procedimento.pacientes');
 });
 
-//adicionar midleware depois
 Route::prefix('/Agendamentos')->group( function() {
     Route::get('/TodosAgendamentos', [AgendamentoController::class, 'index'])->name('agendamento.index');
     Route::get('/Visualizar/{id}', [AgendamentoController::class, 'show'])->name('agendamento.visualizar');
     Route::post('/Cadastrar', [AgendamentoController::class, 'store'])->name('agendamento.cadastrar');
     Route::put('/Atualizar/{id}', [AgendamentoController::class, 'update'])->name('agendamento.atualizar');
     Route::delete('/Deletar/{id}', [AgendamentoController::class, 'destroy'])->name('agendamento.deletar');
-
 });
 
 Route::prefix('/AgendamentosProcedimentos')->group( function() {
@@ -47,5 +46,4 @@ Route::prefix('/AgendamentosProcedimentos')->group( function() {
     Route::get('/Visualizar/{id}', [AgendamentoProcedimentoController::class, 'show'])->name('agendamento.procedimento.visualizar');
     Route::post('/Cadastrar/{id_agendamento}', [AgendamentoProcedimentoController::class, 'store'])->name('agendamento.procedimento.cadastrar');
     Route::delete('/Deletar/{id}', [AgendamentoProcedimentoController::class, 'destroy'])->name('agendamento.procedimento.deletar');
-
 });
