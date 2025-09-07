@@ -12,11 +12,12 @@ use Laravel\Sanctum\HasApiTokens;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 use App\Models\Agendamento;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable implements JWTSubject
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
     //definindo a propriedade da classe user onde vai definir user_type com valores de uma das constantes em enum
     //casts serve pra isso, converter valores de enums

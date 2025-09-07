@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Agendamento extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'agendamento';
 
     protected $fillable = ['data_consulta', 'relatorio_consulta', 'user_patients_id'];
