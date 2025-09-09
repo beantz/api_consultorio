@@ -4,8 +4,10 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AgendamentoController;
 use App\Http\Controllers\AgendamentoProcedimentoController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\OrcamentoController;
 use App\Http\Controllers\PacientesController;
 use App\Http\Controllers\ProcedimentoController;
+use App\Models\Orcamento;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'login'])->name('usuario.login');
@@ -47,4 +49,11 @@ Route::middleware('auth:api')->prefix('/AgendamentosProcedimentos')->group( func
     Route::get('/Visualizar/{id}', [AgendamentoProcedimentoController::class, 'show'])->name('agendamento.procedimento.visualizar');
     Route::post('/Cadastrar/{id_agendamento}', [AgendamentoProcedimentoController::class, 'store'])->name('agendamento.procedimento.cadastrar');
     Route::delete('/Deletar/{id}', [AgendamentoProcedimentoController::class, 'destroy'])->name('agendamento.procedimento.deletar');
+});
+
+Route::prefix('/Orçamentos')->group( function() {
+    Route::post('/Cadastrar', [OrcamentoController::class, 'store'])->name('orcamento.cadastrar');
+    Route::get('/TodosOrçamentos', [OrcamentoController::class, 'index'])->name('orcamentos.visualizar');
+    Route::get('/Visualizar/{orcamento}', [OrcamentoController::class, 'show'])->name('orcamento.visualizar');
+    Route::delete('/Deletar/{orcamento}', [OrcamentoController::class, 'destroy'])->name('orcamento.procedimento.deletar');
 });

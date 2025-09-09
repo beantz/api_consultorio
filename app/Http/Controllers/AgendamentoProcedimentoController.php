@@ -38,6 +38,8 @@ class AgendamentoProcedimentoController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * 
+     * APOS CRIAR UM AGENDAMENTO PARA A REALIZAÇÃO DOS PROCEDIMENTOS, RETORNAR NO EMAIL OS DADOS SOBRE AQUELE OU AQUELES PROCEDIMENTOS
      */
     public function store(ValidationAgendamentoProcedimento $request, $id_agendamento)
     {
