@@ -7,4 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Orcamento extends Model
 {
     protected $fillable = ['relatorio', 'valor_total', 'id_agendamento'];
+
+    public function agendamento() {
+        return $this->belongsTo('App\Models\Agendamento', 'id_agendamento');
+    }
 }

@@ -3,17 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Models\Orcamento;
+use App\Services\OrcamentoService;
 use Illuminate\Http\Request;
 
 class OrcamentoController extends Controller
 {
+    protected $orcamentoService;
+
+    public function __construct(OrcamentoService $orcamentoService)
+    {
+        $this->orcamentoService = $orcamentoService;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $orcamentos = Orcamento::all();
-        return $orcamentos;
+        $response = $this->orcamentoService->getAll();
+
+        $code = $response->status();
+        return response()->json([$response], $code);
     }
 
     /**
@@ -29,8 +38,10 @@ class OrcamentoController extends Controller
      */
     public function store(Request $request)
     {
-        $orcamento = Orcamento::create($request->all());
-        return $orcamento;
+        $response = $this->orcamentoService->create($request);
+
+        $code = $response->status();
+        return response()->json([$response], $code);
     }
 
     /**
@@ -38,9 +49,7 @@ class OrcamentoController extends Controller
      */
     public function show(Orcamento $orcamento)
     {
-        // $orcamento = Orcamento::find($orcamento->id)->first();
-        // return $orcamento;
-        echo $orcamento;
+        return response()->json($orcamento);
     }
 
     /**
