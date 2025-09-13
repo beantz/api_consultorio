@@ -22,4 +22,11 @@ class OrcamentoRepositorie implements OrcamentoRepositoriesInterface {
 
     }
 
+    public function find($id_orcamento) {
+
+        $orcamento = Orcamento::find($id_orcamento)->makeHidden('updated_at', 'created_at');
+        return $orcamento;
+
+    }
+
 }

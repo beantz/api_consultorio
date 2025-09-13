@@ -39,9 +39,13 @@ class OrcamentoController extends Controller
     public function store(Request $request)
     {
         $response = $this->orcamentoService->create($request);
+        $id_orcamento = $response->getData()->data->id;
+
+        $this->orcamentoService->SendInPatientEmail($id_orcamento);
 
         $code = $response->status();
         return response()->json([$response], $code);
+
     }
 
     /**

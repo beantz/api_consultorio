@@ -8,6 +8,7 @@ use App\Http\Controllers\OrcamentoController;
 use App\Http\Controllers\PacientesController;
 use App\Http\Controllers\ProcedimentoController;
 use App\Models\Orcamento;
+use App\Services\OrcamentoService;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'login'])->name('usuario.login');

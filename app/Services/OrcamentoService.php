@@ -5,7 +5,10 @@ namespace App\Services;
 use App\Traits\ApiResponse;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Facades\PacientesRepositoriesFacades;
+use App\Mail\OrcamentoEmail;
+use App\Models\Orcamento;
 use App\Repositories\OrcamentoRepositorie;
+use Illuminate\Support\Facades\Mail;
 
 class OrcamentoService {
 
@@ -49,6 +52,23 @@ class OrcamentoService {
         } catch (\Exception $e) {
             
             return response()->json(['Falha ao listar orçamentos', 500, $e->getMessage()]);
+        }
+
+    }
+
+    public function SendInPatientEmail($id_orcamento) {
+
+        try {
+            $orcamento = $this->orcamentoRepositories->find($id_orcamento);
+            $emailPatient = $orcamento->agendamento->users->email;
+
+            Mail::to($emailPatient)->send(new OrcamentoEmail($orcamento));
+
+            return $this->success(null, 'E-mail de orçamento enviado com sucesso', 200);
+            
+        } catch (\Exception $e) {
+            
+            return response()->json(['Falha ao enviar e-mail', 500, $e->getMessage()]);
         }
 
     }
