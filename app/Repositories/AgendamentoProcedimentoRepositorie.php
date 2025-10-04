@@ -27,7 +27,7 @@ class AgendamentoProcedimentoRepositorie implements AgendamentoProcedimentoRepos
         $agendamento = Agendamento::find($id_agendamento);
         $agendamento->procedimento()->attach($request->get('id_procedimento'));
         
-        return $agendamento->procedimento;
+        return $agendamento;
 
     }
 

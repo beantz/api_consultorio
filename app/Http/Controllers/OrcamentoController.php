@@ -45,7 +45,7 @@ class OrcamentoController extends Controller
 
         $code = $response->status();
         return response()->json([$response], $code);
-
+        
     }
 
     /**

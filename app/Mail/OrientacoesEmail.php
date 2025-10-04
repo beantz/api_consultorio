@@ -2,7 +2,9 @@
 
 namespace App\Mail;
 
-use App\Models\Orcamento;
+use App\Models\Agendamento;
+use App\Models\AgendamentoProcedimento;
+use App\Models\Procedimento;
 use Illuminate\Mail\Mailables\Address;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -11,17 +13,18 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class OrcamentoEmail extends Mailable
+class OrientacoesEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $orcamento;
+    public $agendamento;
+
     /**
      * Create a new message instance.
      */
-    public function __construct(Orcamento $orcamento)
+    public function __construct(Agendamento $agendamento)
     {
-        $this->orcamento = $orcamento;
+        $this->agendamento = $agendamento;
     }
 
     /**
@@ -30,7 +33,7 @@ class OrcamentoEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Orçamento de Tratamento Odontologico',
+            subject: 'Orientaçôes sobre os procedimentos agendados'
         );
     }
 
@@ -40,8 +43,8 @@ class OrcamentoEmail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'email.email_orcamento',
-            with: ['orcamento' => $this->orcamento]
+            view: 'email.email_orientacoes',
+            with: [$this->agendamento]
         );
     }
 

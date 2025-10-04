@@ -30,7 +30,6 @@ class AgendamentoController extends Controller
     //ao realizar a avaliação retornar no email do paciente todo o orçamento e relatório da consulta
     public function store(ValidationAgendamento $request)
     {
-        
         $response = $this->agendamentoService->registerAppointment($request);
 
         $code = $response->status();

@@ -3,11 +3,14 @@
 namespace App\Services;
 
 use App\Http\Requests\ValidationAgendamentoProcedimento;
+use App\Mail\OrcamentoEmail;
+use App\Mail\OrientacoesEmail;
 use App\Models\Agendamento;
 use App\Models\AgendamentoProcedimento;
 use App\Repositories\AgendamentoProcedimentoRepositorie;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class AgendamentoProcedimentoService {
 
@@ -45,6 +48,11 @@ class AgendamentoProcedimentoService {
         try {
 
             $newAgendamento = $this->agendamentoProcedimentoRepositorie->create($request, $id_procedimento);
+            $emailPatient = $newAgendamento->users->email;
+
+            //encaminhar e-mail para pacientes sobre informações sobre os proocedimento que irâo fazer
+            Mail::to($emailPatient)->send(new OrientacoesEmail($newAgendamento));
+
             return $this->success($newAgendamento, 'Agendamento com procedimento criado', 201);
             
         } catch (\Exception $e) {
