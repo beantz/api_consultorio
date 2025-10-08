@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ValidationOrcamentosRequest;
 use App\Models\Orcamento;
 use App\Services\OrcamentoService;
 use Illuminate\Http\Request;
@@ -36,8 +37,10 @@ class OrcamentoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ValidationOrcamentosRequest $request)
     {
+        $request->validated();
+
         $response = $this->orcamentoService->create($request);
         $id_orcamento = $response->getData()->data->id;
 
