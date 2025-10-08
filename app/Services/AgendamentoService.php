@@ -54,8 +54,7 @@ class AgendamentoService {
     public function findAppointment($id) {
 
         try {
-            $agendamentos = $this->agendamentoRepositorie->getAll();
-            $agendamento = $agendamentos->find($id);
+            $agendamento = $this->agendamentoRepositorie->find($id);
 
             if(is_null($agendamento)){
                 $response = $this->error("Paciente de id: $id não encontrado!", 404);
@@ -76,8 +75,7 @@ class AgendamentoService {
 
         try {
             
-            $agendamentos = $this->agendamentoRepositorie->getAll();
-            $agendamento = $agendamentos->find($id);
+            $agendamento = $this->agendamentoRepositorie->find($id);
 
             if(is_null($agendamento)){
                 return $this->error("Agendamento de id: $id não encontrado!", 404);
@@ -96,8 +94,7 @@ class AgendamentoService {
     public function deleteAppointment($id) {
 
         try {
-            $agendamentos = $this->agendamentoRepositorie->getAll();
-            $agendamento = $agendamentos->find($id);
+            $agendamento = $this->agendamentoRepositorie->find($id);
 
             if(is_null($agendamento)){
                 return $this->error("Agendamento de id: $id não encontrado!", 404);
@@ -105,6 +102,26 @@ class AgendamentoService {
 
             $agendamento->delete();
             return $this->success(null, 'Agendamento deletado com sucesso', 200);
+            
+        } catch (\Exception $e) {
+            
+            return $this->error("Não foi possível deletar agendamento de id: $id", 404);
+        }
+
+    }
+
+    public function updateStatusAndReport(Request $request, $id) {
+
+        try {
+            $agendamento = $this->agendamentoRepositorie->find($id);
+
+            if(is_null($agendamento)){
+                return $this->error("Agendamento de id: $agendamento não encontrado!", 404);
+            }
+
+            $agendamento->update(['relatorio_consulta' => $request->relatorio_consulta, 'status' => $request->status]);
+
+            return $this->success($agendamento, 'Agendamento atualizado com sucesso', 200);
             
         } catch (\Exception $e) {
             

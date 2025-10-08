@@ -19,4 +19,11 @@ class AgendamentoRepositorie implements AgendamentoRepositoriesInterface {
         return $agendamento;
     }
 
+    public function find($id_agendamento) {
+
+        $agendamento = Agendamento::find($id_agendamento)->makeHidden('updated_at', 'created_at');
+        return $agendamento;
+
+    }
+
 }

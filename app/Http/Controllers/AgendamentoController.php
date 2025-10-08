@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ValidationAgendamento;
+use App\Models\Agendamento;
 use App\Services\AgendamentoService;
+use Illuminate\Http\Request;
 
 class AgendamentoController extends Controller
 {
@@ -66,6 +68,14 @@ class AgendamentoController extends Controller
     public function destroy(string $id)
     {
         $response = $this->agendamentoService->deleteAppointment($id);
+
+        $code = $response->status();
+        return response()->json([$response], $code);
+    }
+
+    public function updateStatusAndReport(Request $request, $id)
+    {
+        $response = $this->agendamentoService->updateStatusAndReport($request, $id);
 
         $code = $response->status();
         return response()->json([$response], $code);

@@ -42,6 +42,7 @@ Route::middleware('auth:api')->prefix('/Agendamentos')->group( function() {
     Route::get('/TodosAgendamentos', [AgendamentoController::class, 'index'])->name('agendamento.index');
     Route::post('/Cadastrar', [AgendamentoController::class, 'store'])->name('agendamento.cadastrar');
     Route::put('/Atualizar/{id}', [AgendamentoController::class, 'update'])->name('agendamento.atualizar');
+    Route::post('/AtualizarDados/{id}', [AgendamentoController::class, 'updateStatusAndReport'])->name('agendamento.atualizar.dados');
     Route::delete('/Deletar/{id}', [AgendamentoController::class, 'destroy'])->name('agendamento.deletar');
 });
 
