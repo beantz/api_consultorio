@@ -2,9 +2,11 @@
 
 namespace App\Services;
 
+use App\Http\Requests\AtualizarAgendamentoStatusRequest;
 use App\Http\Requests\ValidationAgendamento;
 use App\Repositories\AgendamentoRepositorie;
 use App\Traits\ApiResponse;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 
 class AgendamentoService {
@@ -110,7 +112,9 @@ class AgendamentoService {
 
     }
 
-    public function updateStatusAndReport(Request $request, $id) {
+    public function updateStatusAndReport(AtualizarAgendamentoStatusRequest $request, $id) {
+
+        $request->validated();
 
         try {
             $agendamento = $this->agendamentoRepositorie->find($id);
@@ -119,7 +123,7 @@ class AgendamentoService {
                 return $this->error("Agendamento de id: $agendamento não encontrado!", 404);
             }
 
-            $agendamento->update(['relatorio_consulta' => $request->relatorio_consulta, 'status' => $request->status]);
+            $agendamento->update(['status' => $request->status, 'relatorio_consulta' => $request->relatorio_consulta]);
 
             return $this->success($agendamento, 'Agendamento atualizado com sucesso', 200);
             

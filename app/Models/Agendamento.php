@@ -11,7 +11,7 @@ class Agendamento extends Model
 
     protected $table = 'agendamento';
 
-    protected $fillable = ['data_consulta', 'relatorio_consulta', 'user_patients_id'];
+    protected $fillable = ['data_consulta', 'relatorio_consulta', 'user_patients_id', 'status'];
 
     public function procedimento() {
         return $this->belongsToMany('App\Models\Procedimento', 'agendamento_procedimento');
