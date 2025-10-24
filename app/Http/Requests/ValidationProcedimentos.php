@@ -25,7 +25,7 @@ class ValidationProcedimentos extends FormRequest
     {
         return [
             'nome' => 'required|min:3|max:70',
-            'orientacoes' => 'required|max:140',
+            'orientacoes' => 'required|max:2',
             'medicamento_pre' => 'max:100',
             'medicamente_pos' => 'max:100',
         ];
@@ -44,13 +44,4 @@ class ValidationProcedimentos extends FormRequest
 
     }
 
-    protected function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(
-            response()->json([
-                'message' => 'Erros de validação',
-                'erros' => $validator->errors(),
-            ], 420)
-        );
-    }
 }

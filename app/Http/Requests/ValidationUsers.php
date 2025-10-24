@@ -40,16 +40,4 @@ class ValidationUsers extends FormRequest
         ];
     }
 
-    //personalizando o faledValidation que é gerado automaticamento quando se usa o form request, pra ele da um retorno diferente caso haja algum erro
-    protected function failedValidation(Validator $validator) {
-
-        throw new HttpResponseException(
-            
-            response()->json([
-                'message' => 'Erro de validação',
-                'errors' => $validator->errors(),
-            ], 422)
-
-        );
-    }
 }

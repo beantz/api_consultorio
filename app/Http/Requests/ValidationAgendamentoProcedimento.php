@@ -36,13 +36,4 @@ class ValidationAgendamentoProcedimento extends FormRequest
         ];
     }
 
-    protected function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(
-            response()->json([
-                'message' => 'Erros de validação',
-                'erros' => $validator->errors(),
-            ], 420)
-        );
-    }
 }
