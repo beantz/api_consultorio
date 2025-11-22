@@ -31,15 +31,13 @@
             <h4>📋 Informações detalhadas sobre seus Procedimentos:</h4>
             
             <div class="orcamento">
-            @foreach ($agendamento->procedimento as $value)
-                
-            @endforeach
-                <p>{{ $value }}</p>
-                <p>{{ $value->nome }}</p>
-                <p>{{ $value->orientacoes }}</p>
-                <p>{{ $value->raio_x ?? ''}}</p>
-                <p>{{ $value->medicamento_pre }}</p>
-                <p>{{ $value->medicamento_pos }}</p>
+                @foreach ($agendamento->procedimento as $procedimento)
+                    <p>{{ $procedimento->nome }}</p>
+                    <p>{{ $procedimento->orientacoes }}</p>
+                    <p>{{ $procedimento->raio_x ?? ''}}</p>
+                    <p>{{ $procedimento->medicamento_pre }}</p>
+                    <p>{{ $procedimento->medicamento_pos }}</p>
+                @endforeach
             </div>
 
             <div style="text-align: center; margin: 20px 0;">
