@@ -6,7 +6,7 @@ use App\Models\Pacientes;
 use App\Models\User;
 use App\Interfaces\PacientesRepositoriesInterface;
 
-class PacientesRepositorie implements PacientesRepositoriesInterface {
+class PacientesRepositorie {
 
     public function getAllUsers() {
 

@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\Models\Procedimento;
 use App\Interfaces\ProcedimentosRepositoriesInterface;
 
-class ProcedimentoRepositorie implements ProcedimentosRepositoriesInterface{
+class ProcedimentoRepositorie {
 
     public function getAllProcedures() {
         $procedimentos = Procedimento::all();

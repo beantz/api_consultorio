@@ -7,7 +7,7 @@ use App\Models\Agendamento;
 use Illuminate\Http\Request;
 use App\Models\AgendamentoProcedimento;
 
-class AgendamentoProcedimentoRepositorie implements AgendamentoProcedimentoRepositoriesInterface {
+class AgendamentoProcedimentoRepositorie {
 
     public function getAll() {
 

@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\Interfaces\AgendamentoRepositoriesInterface;
 use App\Models\Agendamento;
 
-class AgendamentoRepositorie implements AgendamentoRepositoriesInterface {
+class AgendamentoRepositorie {
 
     public function getAll() {
 

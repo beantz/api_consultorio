@@ -6,7 +6,7 @@ use App\Interfaces\OrcamentoRepositoriesInterface;
 use App\Models\Orcamento;
 use App\Models\User;
 
-class OrcamentoRepositorie implements OrcamentoRepositoriesInterface {
+class OrcamentoRepositorie {
 
     public function getAll() {
 
