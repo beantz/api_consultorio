@@ -26,9 +26,7 @@ class PacientesController extends Controller
     public function index()
     {
         $response = $this->pacientesService->getAll();
-        //resgatando o codigo para vindo do service e mandando pelo json no controller
-        $code = $response->status();
-        return response()->json([$response], $code);
+        return response()->json($response);
     }
 
     public function store(ValidationUsersStore $request)
@@ -36,8 +34,7 @@ class PacientesController extends Controller
         $request->validated();
         $response = $this->pacientesService->registerPatients($request);
 
-        $code = $response->status();
-        return response()->json([$response], $code);
+        return response()->json($response);
         
     }
 
@@ -45,8 +42,7 @@ class PacientesController extends Controller
     {
         $response = $this->pacientesService->findPatient($id);
 
-        $code = $response->status();
-        return response()->json([$response], $code);
+        return response()->json($response);
     }
 
     public function update(Request $request, string $id)
@@ -54,8 +50,7 @@ class PacientesController extends Controller
         
         $response = $this->pacientesService->updatePatient($request, $id);
 
-        $code = $response->status();
-        return response()->json([$response], $code);
+        return response()->json($response);
 
     }
 
@@ -64,8 +59,7 @@ class PacientesController extends Controller
     
         $response = $this->pacientesService->deletePatient($id);
 
-        $code = $response->status();
-        return response()->json([$response], $code);
+        return response()->json($response);
 
     }
 }

@@ -137,13 +137,14 @@ class PacientesService {
             if(is_null($paciente)){
                 return $this->error("Paciente de id: $id não encontrado!", 404);
             }
-
+                
             $paciente->delete();
             return $this->success(null, 'Paciente deletado com sucesso', 200);
             
+            
         } catch (\Exception $e) {
             
-            return $this->error("Não foi possível deletar paciente de id: $id", 404);
+            return $this->error("Não foi possível deletar paciente de id: $id", 404, $e->getMessage());
         }
 
     }
