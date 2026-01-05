@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AtualizarAgendamentoStatusRequest;
 use App\Http\Requests\ValidationAgendamento;
+use App\Http\Requests\ValidationAgendamentoStatusRequest;
 use App\Models\Agendamento;
 use App\Services\AgendamentoService;
 use Illuminate\Http\Request;
@@ -74,7 +74,7 @@ class AgendamentoController extends Controller
         return response()->json([$response], $code);
     }
 
-    public function updateStatusAndReport(AtualizarAgendamentoStatusRequest $request, $id)
+    public function updateStatusAndReport(ValidationAgendamentoStatusRequest $request, $id)
     {
         $response = $this->agendamentoService->updateStatusAndReport($request, $id);
 

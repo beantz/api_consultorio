@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Http\Requests\AtualizarAgendamentoStatusRequest;
 use App\Http\Requests\ValidationAgendamento;
+use App\Http\Requests\ValidationAgendamentoStatusRequest;
 use App\Repositories\AgendamentoRepositorie;
 use App\Traits\ApiResponse;
 use Illuminate\Auth\Events\Validated;
@@ -112,7 +112,7 @@ class AgendamentoService {
 
     }
 
-    public function updateStatusAndReport(AtualizarAgendamentoStatusRequest $request, $id) {
+    public function updateStatusAndReport(ValidationAgendamentoStatusRequest $request, $id) {
 
         $request->validated();
 
