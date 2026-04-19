@@ -3,14 +3,12 @@
 namespace App\Services;
 
 use App\Http\Requests\ValidationAgendamentoProcedimento;
-use App\Mail\OrcamentoEmail;
 use App\Mail\OrientacoesEmail;
-use App\Models\Agendamento;
-use App\Models\AgendamentoProcedimento;
 use App\Repositories\AgendamentoProcedimentoRepositorie;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 
 class AgendamentoProcedimentoService {
 
@@ -57,7 +55,10 @@ class AgendamentoProcedimentoService {
             
         } catch (\Exception $e) {
             
-            return $this->error('Falha ao criar agendamento', 500, $e->getMessage());
+            $errorMsg = $e->getMessage() ?: 'Erro desconhecido (sem mensagem)';
+            Log::error('Falha ao criar agendamento', ['error' => $errorMsg]);
+            
+            return $this->error('Falha ao criar agendamento: ' . $errorMsg, 500);
         }
 
     }

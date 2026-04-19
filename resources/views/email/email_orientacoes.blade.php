@@ -23,12 +23,11 @@
 
         <div class="content">
             <h2>Olá, {{ $agendamento->users->nome }}!</h2>
-            <p>Seu agendamento foi gerado em: <strong>{{ $agendamento->data_consulta }}</strong></p>
+            <p>Seu agendamento foi marcado para: <strong>{{ $agendamento->data_consulta }}</strong></p>
             
             <hr>
             
-            <h3>📋 Procedimentos Necessários:</h3>
-            <h4>📋 Informações detalhadas sobre seus Procedimentos:</h4>
+            <h3>📋 Informações detalhadas sobre seus Procedimentos:</h3>
             
             <div class="orcamento">
                 @foreach ($agendamento->procedimento as $procedimento)

@@ -6,8 +6,7 @@ use App\Http\Requests\ValidationAgendamento;
 use App\Http\Requests\ValidationAgendamentoStatusRequest;
 use App\Repositories\AgendamentoRepositorie;
 use App\Traits\ApiResponse;
-use Illuminate\Auth\Events\Validated;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class AgendamentoService {
 
@@ -48,7 +47,10 @@ class AgendamentoService {
             
         } catch (\Exception $e) {
             
-            return $this->error('Falha ao criar agendamento', 500, $e->getMessage());
+            $errorMsg = $e->getMessage() ?: 'Erro desconhecido (sem mensagem)';
+            Log::error('Falha ao criar agendamento', ['error' => $errorMsg]);
+
+            return $this->error('Falha ao criar agendamentooo', 500, $errorMsg);
         }
 
     }

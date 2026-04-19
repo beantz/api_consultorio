@@ -27,11 +27,12 @@ class ProcedimentoService {
             if($procedimentos->count() > 0) {
                 return $this->success($procedimentos, "Todos os procedimentos", 200);
             }
-            return $this->error("Sem procesdimentos cadastrados", 404);
+            return $this->error("Sem procedimentos cadastrados", 404);
 
         } catch (\Exception $e) {
-            return $this->error("Erro ao buscar procedimentos", 500, $e);
+            return $this->error(500, $e->getMessage());
         } 
+        
     }
 
     public function createProcedures(Request $request)
@@ -43,9 +44,10 @@ class ProcedimentoService {
             return $this->success($procedimento, "Procedimento cadastrado!", 201);
         } catch (\Exception $e){
 
-            $this->error("Erro ao cadastrar procedimento", 500 ,$e);
+            $this->error(500 ,$e->getMessage());
         }
     }
+    
 
     public function show($id) {
 
@@ -56,9 +58,9 @@ class ProcedimentoService {
             return $this->success($procedimento, "Procedimento encontrado!", 200);
         } catch (ModelNotFoundException $e) {
 
-            return $this->error("Erro ao buscar procedimento de id: $id", 404, $e->getMessage());
+            return $this->error(404, $e->getMessage());
         }
-
+    
     }
 
     public function update($request, $id) {
@@ -70,9 +72,9 @@ class ProcedimentoService {
             return $this->success($procedimento, "Procedimento atualizado com sucesso!", 200);
         } catch (ModelNotFoundException $e) {
 
-            return $this->error("Erro ao buscar procedimento de id: $id", 404, $e->getMessage());
+            return $this->error(404, $e->getMessage());
         }
-
+    
     }
 
     public function destroy($id) {
@@ -102,8 +104,7 @@ class ProcedimentoService {
             return $this->success($users, "Pacientes de procedimento: $procedimento->nome encontrado!", 200);
         } catch (ModelNotFoundException $e) {
 
-            return $this->error("Erro ao buscar procedimento de id: $id_procedimento", 404, $e->getMessage());
+            return $this->error(404, $e->getMessage());
         }
     }
-
 }

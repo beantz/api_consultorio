@@ -25,7 +25,7 @@ class ValidationProcedimentos extends FormRequest
     {
         return [
             'nome' => 'required|min:3|max:70',
-            'orientacoes' => 'required|max:2',
+            'orientacoes' => 'required|max:140',
             'medicamento_pre' => 'max:100',
             'medicamente_pos' => 'max:100',
         ];
